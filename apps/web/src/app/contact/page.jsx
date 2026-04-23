@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import PaperPlaneAnimation from "../../components/PaperPlaneAnimation";
 import { Send, Mail, MessageCircle, User, FileText } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -107,6 +108,11 @@ export default function ContactPage() {
           <p className="font-kalam text-lg md:text-xl text-[#5A5A5A] mt-8 max-w-2xl mx-auto">
             {t("contact.subtitle")}
           </p>
+
+          {/* Анимированный самолетик */}
+          <div className="flex justify-center mt-6">
+            <PaperPlaneAnimation />
+          </div>
         </div>
 
         {/* Декоративные элементы */}

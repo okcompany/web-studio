@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "react-router";
 import { Mail, MessageCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -39,23 +40,21 @@ export default function Footer() {
           <ul className="space-y-2 font-kalam text-[#5A5A5A]">
             <li className="flex items-center gap-2">
               <Mail size={16} />
-              <a
-                href="mailto:kalchenko2022@gmail.com"
+              <Link
+                to="/contact"
                 className="hover:text-[#2A2A2A] transition-colors"
               >
                 kalchenko2022@gmail.com
-              </a>
+              </Link>
             </li>
             <li className="flex items-center gap-2">
               <MessageCircle size={16} />
-              <a
-                href="https://t.me/OKwebDesign_bot"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/contact"
                 className="hover:text-[#2A2A2A] transition-colors"
               >
                 @OKwebDesign_bot
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { languages } from "../utils/i18n";
+import TypewriterText from "./TypewriterText";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,7 +56,7 @@ export default function Header() {
         <div className="flex items-center">
           <a href="/" className="relative group watercolor-hover">
             <div className="font-caveat text-2xl md:text-3xl font-bold text-[#2A2A2A] relative z-10">
-              Oleh Kalchenko
+              <TypewriterText text="Web Studio Oleh Kalchenko" delay={4000} />
             </div>
             {/* Цветная рисованная подчеркивание */}
             <svg

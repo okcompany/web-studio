@@ -5,6 +5,10 @@ import { Link } from "react-router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
+import FloatingShapes from "../components/FloatingShapes";
+import HighlightedSlogan from "../components/HighlightedSlogan";
+import PaperPlaneAnimation from "../components/PaperPlaneAnimation";
+import BusAnimation from "../components/BusAnimation";
 import {
   ArrowRight,
   Send,
@@ -24,7 +28,8 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FEFEFE]">
+    <div className="min-h-screen bg-[#FEFEFE] relative">
+      <FloatingShapes />
       <Header />
 
       {/* Секция Hero */}
@@ -87,9 +92,7 @@ export default function HomePage() {
 
               {/* Основной заголовок */}
               <div className="relative">
-                <h1 className="font-caveat text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] leading-tight">
-                  {t("home.slogan")}
-                </h1>
+                <HighlightedSlogan />
                 {/* Цветное рисованное подчеркивание */}
                 <svg
                   className="absolute -bottom-4 left-0 w-4/5 h-6"
@@ -348,6 +351,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Анимация самолетика (telegram hint) */}
+      <div className="hidden md:flex justify-center -mt-8 mb-8 pointer-events-none">
+        <PaperPlaneAnimation />
+      </div>
+
       {/* Индикатор прокрутки */}
       <div className="flex justify-center pb-12">
         <div className="relative">
@@ -385,8 +393,38 @@ export default function HomePage() {
       {/* CTA */}
       <CTASection />
 
+      {/* News teaser с автобусом */}
+      <NewsTeaserSection />
+
       <Footer />
     </div>
+  );
+}
+
+function NewsTeaserSection() {
+  const { t } = useLanguage();
+  return (
+    <section className="relative py-16 px-6 md:px-12 overflow-hidden">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <Reveal className="flex-shrink-0">
+          <BusAnimation />
+        </Reveal>
+        <Reveal delay={120} className="flex-1 text-center md:text-left">
+          <h3 className="font-caveat text-3xl md:text-4xl font-bold text-[#2A2A2A] mb-3">
+            {t("news.title")}
+          </h3>
+          <p className="font-kalam text-lg text-[#5A5A5A] mb-5 max-w-xl">
+            {t("news.description")}
+          </p>
+          <Link
+            to="/news"
+            className="font-kalam text-[#2A2A2A] underline decoration-[#A8D5BA] decoration-2 underline-offset-4 hover:decoration-[#F0C5A9] transition-colors"
+          >
+            {t("nav.news")} →
+          </Link>
+        </Reveal>
+      </div>
+    </section>
   );
 }
 

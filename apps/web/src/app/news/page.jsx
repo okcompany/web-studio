@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import BusAnimation from "../../components/BusAnimation";
 import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -76,6 +77,11 @@ export default function NewsPage() {
           <p className="font-kalam text-lg md:text-xl text-[#5A5A5A] mt-8 max-w-2xl mx-auto">
             {t('news.description')}
           </p>
+
+          {/* Анимированный автобус */}
+          <div className="flex justify-center mt-6">
+            <BusAnimation />
+          </div>
         </div>
 
         {/* Декоративные элементы */}
