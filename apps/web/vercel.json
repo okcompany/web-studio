@@ -1,4 +1,5 @@
 {
+  "installCommand": "npm install --legacy-peer-deps",
   "functions": {
     "api/**/*.js": {
       "runtime": "@vercel/node@5.7.13"
