@@ -16,6 +16,8 @@ import {
   ArrowLeft,
   Menu,
   X,
+  FileText,
+  Save,
 } from "lucide-react";
 import AdminList from "../../components/AdminList";
 import EditorForm from "../../components/EditorForm";
@@ -71,6 +73,7 @@ const TABS = [
   { key: "news", label: "Новости", Icon: Newspaper },
   { key: "portfolio", label: "Портфолио", Icon: Briefcase },
   { key: "slideshow", label: "Слайдшоу", Icon: Images },
+  { key: "legal", label: "Правовые страницы", Icon: FileText },
   { key: "settings", label: "Настройки", Icon: Settings },
 ];
 
@@ -182,6 +185,7 @@ export default function AdminPage() {
             {activeTab === "news" && <CmsPanel type="news" />}
             {activeTab === "portfolio" && <CmsPanel type="portfolio" />}
             {activeTab === "slideshow" && <SlideshowPanel />}
+            {activeTab === "legal" && <LegalPanel />}
             {activeTab === "settings" && <SettingsPanel />}
           </main>
         </div>
@@ -729,6 +733,162 @@ function SettingsPanel() {
             <code className="bg-white px-1 rounded">TELEGRAMM_TOKEN</code> /{" "}
             <code className="bg-white px-1 rounded">TELEGRAMM_ID</code> —
             рассылка сообщений из контактной формы
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function LegalPanel() {
+  const [data, setData] = useState({
+    impressum: { de: "", en: "", ru: "" },
+    datenschutz: { de: "", en: "", ru: "" },
+    updatedAt: null,
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/legal")
+      .then((r) => r.json())
+      .then((payload) => {
+        if (cancelled || !payload) return;
+        setData({
+          impressum: {
+            de: payload.impressum?.de || "",
+            en: payload.impressum?.en || "",
+            ru: payload.impressum?.ru || "",
+          },
+          datenschutz: {
+            de: payload.datenschutz?.de || "",
+            en: payload.datenschutz?.en || "",
+            ru: payload.datenschutz?.ru || "",
+          },
+          updatedAt: payload.updatedAt || null,
+        });
+      })
+      .catch(() => {})
+      .finally(() => !cancelled && setLoading(false));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function handleSave() {
+    setSaving(true);
+    setMessage(null);
+    try {
+      const res = await fetch("/api/legal", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          impressum: data.impressum,
+          datenschutz: data.datenschutz,
+        }),
+      });
+      if (!res.ok) throw new Error((await res.text()) || "Save failed");
+      const payload = await res.json();
+      setData((d) => ({ ...d, updatedAt: payload.updatedAt }));
+      setMessage({ type: "ok", text: "Сохранено. Коммит ушёл в GitHub." });
+    } catch (err) {
+      setMessage({ type: "err", text: err.message || "Ошибка сохранения" });
+    } finally {
+      setSaving(false);
+      setTimeout(() => setMessage(null), 6000);
+    }
+  }
+
+  function update(section, lang, value) {
+    setData((d) => ({ ...d, [section]: { ...d[section], [lang]: value } }));
+  }
+
+  const langs = [
+    { key: "de", label: "Deutsch (юридически обязательная версия)" },
+    { key: "en", label: "English" },
+    { key: "ru", label: "Русский" },
+  ];
+
+  return (
+    <div>
+      <SectionHeader
+        title="Правовые страницы"
+        subtitle="Импрессум и Политика конфиденциальности — редактируется вами. Сохранение коммитит изменения в GitHub, Vercel деплоит сайт за 1–2 минуты."
+        action={
+          <button
+            onClick={handleSave}
+            disabled={saving || loading}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#A8D5BA] text-[#2A2A2A] font-kalam hover:bg-[#9BC9AD] disabled:opacity-60"
+          >
+            <Save size={16} />
+            {saving ? "Сохраняю…" : "Сохранить"}
+          </button>
+        }
+      />
+
+      {message && (
+        <div
+          className={`mb-4 flex items-center gap-2 px-4 py-2 rounded-xl font-kalam text-sm ${
+            message.type === "ok"
+              ? "bg-[#EAF7EE] text-[#2F5D43] border border-[#A8D5BA]"
+              : "bg-[#FDECEC] text-[#8A2A2A] border border-[#E8B4B4]"
+          }`}
+        >
+          {message.type === "ok" ? <Check size={16} /> : <AlertCircle size={16} />}
+          {message.text}
+        </div>
+      )}
+
+      <div className="mb-4 text-xs font-kalam text-[#7A7A7A]">
+        Последнее изменение:{" "}
+        {data.updatedAt
+          ? new Date(data.updatedAt).toLocaleString("de-DE")
+          : "— страницы ещё ни разу не сохранялись через админку (показывается шаблон)"}
+      </div>
+
+      {["impressum", "datenschutz"].map((section) => (
+        <div
+          key={section}
+          className="bg-white border border-[#EADFD0] rounded-2xl p-5 mb-6"
+        >
+          <div className="font-caveat text-2xl text-[#2A2A2A] mb-3">
+            {section === "impressum" ? "Impressum" : "Datenschutzerklärung"}
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {langs.map((l) => (
+              <label key={l.key} className="block">
+                <div className="font-kalam text-sm text-[#5A5A5A] mb-1">
+                  {l.label}
+                </div>
+                <textarea
+                  rows={10}
+                  value={data[section][l.key]}
+                  onChange={(e) => update(section, l.key, e.target.value)}
+                  disabled={loading}
+                  className="w-full p-3 border border-[#EADFD0] rounded-xl font-kalam text-sm text-[#2A2A2A] bg-[#FDFBF7] focus:outline-none focus:border-[#A8D5BA]"
+                  placeholder="Оставьте пустым, чтобы показать шаблон по умолчанию"
+                />
+              </label>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="bg-[#FCFAF7] border border-[#EADFD0] rounded-2xl p-5 font-kalam text-sm text-[#5A5A5A] space-y-2">
+        <div className="font-caveat text-xl text-[#2A2A2A]">Подсказки</div>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Пустые переводы автоматически падают на немецкий текст.</li>
+          <li>
+            Между абзацами вставляйте пустую строку — она превратится в отступ
+            на странице.
+          </li>
+          <li>
+            Если после сохранения страница /impressum или /datenschutz не
+            обновилась — подождите 30–60 секунд, Vercel дособирает новый
+            деплой после коммита.
           </li>
         </ul>
       </div>

@@ -32,6 +32,9 @@ export const addSlideshowImage = (...a) => backend().addSlideshowImage(...a);
 export const deleteSlideshowImage = (...a) =>
   backend().deleteSlideshowImage(...a);
 
+export const getLegal = (...a) => backend().getLegal(...a);
+export const setLegal = (...a) => backend().setLegal(...a);
+
 export async function uploadAsset({ fileName, buffer }) {
   if (github.isGithubStorageAvailable()) {
     return github.uploadAsset({ fileName, buffer });

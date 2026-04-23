@@ -251,3 +251,20 @@ export async function deleteSlideshowImage(name) {
   });
   return true;
 }
+
+// Legal pages content (Impressum + Datenschutz) stored as a single JSON
+// blob so the admin can edit three-language text areas inline.
+const LEGAL_PATH = "apps/web/content_data/legal.json";
+
+export async function getLegal() {
+  return (await readJson(LEGAL_PATH)) || null;
+}
+
+export async function setLegal(payload) {
+  await writeFile({
+    path: LEGAL_PATH,
+    content: JSON.stringify(payload, null, 2),
+    message: "cms: update legal pages",
+  });
+  return payload;
+}

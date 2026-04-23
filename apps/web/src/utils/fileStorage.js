@@ -151,3 +151,15 @@ export async function deleteSlideshowImage(name) {
   await fs.unlink(join(SLIDESHOW_DIR, safe)).catch(() => {});
   return true;
 }
+
+const LEGAL_FILE = join(DATA_DIR, 'legal.json');
+
+export async function getLegal() {
+  return readJsonFile(LEGAL_FILE);
+}
+
+export async function setLegal(payload) {
+  await ensureDirExists(DATA_DIR);
+  await writeJsonFile(LEGAL_FILE, payload);
+  return payload;
+}
