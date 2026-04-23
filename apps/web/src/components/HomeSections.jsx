@@ -73,19 +73,61 @@ export function WhyMeSection() {
   );
 }
 
-// Tech stack strip — small hand-drawn "polaroid" tiles for each tool.
+// Tech stack strip — hand-drawn "polaroid" tiles grouped by category.
+// Includes an explicit AI row so visitors see that OK integrates AI into
+// projects (chatbots, assistants, AI-assisted flows).
 export function TechStackSection() {
   const { t } = useLanguage();
-  const tools = [
-    { name: "React", color: "#61DAFB" },
-    { name: "Next.js", color: "#2A2A2A" },
-    { name: "Tailwind", color: "#38BDF8" },
-    { name: "Figma", color: "#F04E23" },
-    { name: "Node.js", color: "#8BC34A" },
-    { name: "Framer", color: "#0055FF" },
-    { name: "Vercel", color: "#2A2A2A" },
-    { name: "Resend", color: "#FF6B6B" },
+  const groups = t("home.techStack.groups");
+  const fallbackGroups = [
+    {
+      title: "Design",
+      tools: [
+        { name: "Figma", color: "#F04E23" },
+        { name: "Adobe XD", color: "#FF61F6" },
+        { name: "Photoshop", color: "#31A8FF" },
+        { name: "Illustrator", color: "#FF9A00" },
+        { name: "Canva", color: "#00C4CC" },
+        { name: "Framer", color: "#0055FF" },
+      ],
+    },
+    {
+      title: "Development",
+      tools: [
+        { name: "React", color: "#61DAFB" },
+        { name: "Next.js", color: "#2A2A2A" },
+        { name: "Astro", color: "#FF5D01" },
+        { name: "Tailwind", color: "#38BDF8" },
+        { name: "TypeScript", color: "#3178C6" },
+        { name: "Vite", color: "#646CFF" },
+        { name: "Node.js", color: "#8BC34A" },
+      ],
+    },
+    {
+      title: "Backend & Delivery",
+      tools: [
+        { name: "Supabase", color: "#3ECF8E" },
+        { name: "Vercel", color: "#2A2A2A" },
+        { name: "Netlify", color: "#00C7B7" },
+        { name: "Cloudflare", color: "#F38020" },
+        { name: "Stripe", color: "#635BFF" },
+        { name: "Resend", color: "#FF6B6B" },
+      ],
+    },
+    {
+      title: "AI in projects",
+      tools: [
+        { name: "ChatGPT", color: "#10A37F" },
+        { name: "Claude", color: "#CC785C" },
+        { name: "Cursor", color: "#2A2A2A" },
+        { name: "v0", color: "#2A2A2A" },
+        { name: "Midjourney", color: "#9A3B96" },
+        { name: "Runway", color: "#B0A5FF" },
+        { name: "Chatbots / Assistants", color: "#F0C5A9" },
+      ],
+    },
   ];
+  const data = Array.isArray(groups) && groups.length ? groups : fallbackGroups;
   return (
     <section className="py-16 px-6 md:px-12 bg-[#FCFAF7]/60">
       <div className="max-w-6xl mx-auto">
@@ -97,24 +139,40 @@ export function TechStackSection() {
             {t("home.techStack.subtitle")}
           </p>
         </Reveal>
-        <div className="flex flex-wrap justify-center gap-4">
-          {tools.map((tool, idx) => (
-            <Reveal
-              key={tool.name}
-              delay={idx * 80}
-              className="bg-white px-5 py-3 rounded-xl border border-[#EADFD0] shadow-sm font-kalam text-[#2A2A2A] flex items-center gap-2 sticker-shadow watercolor-hover"
-              style={{
-                transform: `rotate(${(idx % 2 ? 1 : -1) * (idx % 3 + 1) * 0.6}deg)`,
-              }}
-            >
-              <span
-                className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: tool.color }}
-              />
-              {tool.name}
-            </Reveal>
+        <div className="space-y-8">
+          {data.map((group, gIdx) => (
+            <div key={group.title}>
+              <Reveal delay={gIdx * 80}>
+                <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-3 text-center">
+                  {group.title}
+                </h3>
+              </Reveal>
+              <div className="flex flex-wrap justify-center gap-3">
+                {group.tools.map((tool, idx) => (
+                  <Reveal
+                    key={tool.name}
+                    delay={gIdx * 80 + idx * 40}
+                    className="bg-white px-4 py-2 rounded-xl border border-[#EADFD0] shadow-sm font-kalam text-[#2A2A2A] text-sm flex items-center gap-2 sticker-shadow watercolor-hover"
+                    style={{
+                      transform: `rotate(${((gIdx * 3 + idx) % 2 ? 1 : -1) * (idx % 3 + 1) * 0.5}deg)`,
+                    }}
+                  >
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: tool.color }}
+                    />
+                    {tool.name}
+                  </Reveal>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
+        <Reveal delay={200} className="text-center mt-10">
+          <p className="font-kalam text-[#5A5A5A] max-w-2xl mx-auto">
+            {t("home.techStack.note")}
+          </p>
+        </Reveal>
       </div>
     </section>
   );
