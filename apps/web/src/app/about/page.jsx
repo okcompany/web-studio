@@ -4,16 +4,20 @@ import Footer from '../../components/Footer';
 import Reveal from '../../components/Reveal';
 import FloatingShapes from '../../components/FloatingShapes';
 import MadeInBadge from '../../components/MadeInBadge';
+import MatrixRain from '../../components/MatrixRain';
 import {
-  Palette,
-  Code2,
-  Sparkles,
-  Wrench,
-  Handshake,
-  Zap,
-  Gem,
-  Heart,
-} from 'lucide-react';
+  IconBrowserWindow,
+  IconCodeBrackets,
+  IconPalette,
+  IconWrenchBolt,
+  IconHandshake,
+  IconFastClock,
+  IconPencilLine,
+  IconMagnifier,
+  IconCompass,
+  IconHammerNail,
+  IconRocket,
+} from '../../components/HandDrawnIcons';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function AboutPage() {
@@ -23,9 +27,26 @@ export default function AboutPage() {
   const story = t('about.story');
   const values = t('about.values');
   const funFacts = t('about.funFacts');
-  const stackMeta = t('about.stack');
-  const icons = [Palette, Code2, Sparkles, Wrench];
-  const valueIcons = [Handshake, Zap, Gem, Heart];
+  const techGroups = t('home.techStack.groups');
+  const techNote = t('home.techStack.note');
+  const serviceIllustrations = [
+    IconBrowserWindow,
+    IconCodeBrackets,
+    IconPalette,
+    IconWrenchBolt,
+  ];
+  const valueIllustrations = [
+    IconHandshake,
+    IconFastClock,
+    IconPencilLine,
+    IconRocket,
+  ];
+  const processIllustrations = [
+    IconMagnifier,
+    IconCompass,
+    IconHammerNail,
+    IconRocket,
+  ];
   const palette = ['#A8D5BA', '#F0C5A9', '#D4C5F9', '#BEE3DB'];
 
   return (
@@ -34,10 +55,16 @@ export default function AboutPage() {
       <Header />
 
       {/* Заголовок страницы */}
-      <section className="relative py-10 px-4 sm:py-14 sm:px-8 md:py-16 md:px-12">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative py-10 px-4 sm:py-14 sm:px-8 md:py-16 md:px-12 overflow-hidden">
+        {/* Matrix digital rain — cloud-shaped backdrop behind the page title */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(90vw,900px)] h-[min(70vh,440px)] opacity-60">
+            <MatrixRain color="#2dbf6e" />
+          </div>
+        </div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="relative inline-block">
-            <h1 className="font-caveat text-4xl sm:text-5xl md:text-7xl font-bold text-[#2A2A2A] mb-4">
+            <h1 className="font-caveat text-4xl sm:text-5xl md:text-7xl font-bold text-[#2A2A2A] mb-4 relative">
               {t('about.title')}
             </h1>
             {/* Цветное рисованное подчеркивание */}
@@ -175,7 +202,8 @@ export default function AboutPage() {
             </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {values.items.map((v, idx) => {
-                const Icon = valueIcons[idx % valueIcons.length];
+                const Illustration =
+                  valueIllustrations[idx % valueIllustrations.length];
                 const color = palette[idx % palette.length];
                 return (
                   <Reveal
@@ -184,10 +212,10 @@ export default function AboutPage() {
                     className="bg-white/80 rounded-2xl p-5 border border-[#EADFD0] watercolor-hover"
                   >
                     <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center mb-3"
-                      style={{ backgroundColor: `${color}33`, color }}
+                      className="w-16 h-16 rounded-xl flex items-center justify-center mb-3"
+                      style={{ backgroundColor: `${color}22` }}
                     >
-                      <Icon size={20} />
+                      <Illustration size={52} color={color} />
                     </div>
                     <h3 className="font-caveat text-xl text-[#2A2A2A] mb-1">
                       {v.title}
@@ -203,47 +231,58 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* Tech stack */}
-      {stackMeta && (
+      {/* Tech stack — grouped with AI, mirrors the home page toolkit */}
+      {Array.isArray(techGroups) && techGroups.length > 0 && (
         <section className="py-12 px-4 sm:px-8 md:px-12 bg-[#FCFAF7]/60">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <Reveal className="text-center mb-8">
               <h2 className="font-caveat text-3xl md:text-4xl font-bold text-[#2A2A2A]">
-                {stackMeta.title}
+                {t('home.techStack.title')}
               </h2>
               <p className="font-kalam text-[#5A5A5A] mt-2">
-                {stackMeta.subtitle}
+                {t('home.techStack.subtitle')}
               </p>
             </Reveal>
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                { name: 'React', color: '#61DAFB' },
-                { name: 'Next.js', color: '#2A2A2A' },
-                { name: 'React Router', color: '#CA4245' },
-                { name: 'Tailwind', color: '#38BDF8' },
-                { name: 'Figma', color: '#F04E23' },
-                { name: 'Node.js', color: '#8BC34A' },
-                { name: 'Framer', color: '#0055FF' },
-                { name: 'Vercel', color: '#2A2A2A' },
-                { name: 'Resend', color: '#FF6B6B' },
-                { name: 'TypeScript', color: '#3178C6' },
-              ].map((tool, idx) => (
-                <Reveal
-                  key={tool.name}
-                  delay={idx * 60}
-                  className="bg-white px-4 py-2 rounded-xl border border-[#EADFD0] font-kalam text-sm text-[#2A2A2A] flex items-center gap-2 sticker-shadow watercolor-hover"
-                  style={{
-                    transform: `rotate(${(idx % 2 ? 1 : -1) * (idx % 3 + 1) * 0.4}deg)`,
-                  }}
-                >
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: tool.color }}
-                  />
-                  {tool.name}
-                </Reveal>
+            <div className="space-y-6">
+              {techGroups.map((group, gIdx) => (
+                <div key={group.title}>
+                  <Reveal delay={gIdx * 80}>
+                    <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-3 text-center">
+                      {group.title}
+                    </h3>
+                  </Reveal>
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {group.tools.map((tool, idx) => (
+                      <Reveal
+                        key={tool.name}
+                        delay={gIdx * 80 + idx * 40}
+                        className="bg-white px-4 py-2 rounded-xl border border-[#EADFD0] font-kalam text-sm text-[#2A2A2A] flex items-center gap-2 sticker-shadow watercolor-hover"
+                        style={{
+                          transform: `rotate(${
+                            ((gIdx * 3 + idx) % 2 ? 1 : -1) *
+                            ((idx % 3) + 1) *
+                            0.5
+                          }deg)`,
+                        }}
+                      >
+                        <span
+                          className="w-2 h-2 rounded-full"
+                          style={{ backgroundColor: tool.color }}
+                        />
+                        {tool.name}
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
+            {techNote && (
+              <Reveal delay={200} className="text-center mt-10">
+                <p className="font-kalam text-[#5A5A5A] max-w-2xl mx-auto">
+                  {techNote}
+                </p>
+              </Reveal>
+            )}
           </div>
         </section>
       )}
@@ -286,7 +325,8 @@ export default function AboutPage() {
           </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {(Array.isArray(services) ? services : []).map((s, idx) => {
-              const Icon = icons[idx % icons.length];
+              const Illustration =
+                serviceIllustrations[idx % serviceIllustrations.length];
               const color = palette[idx % palette.length];
               return (
                 <Reveal
@@ -295,10 +335,10 @@ export default function AboutPage() {
                   className="bg-white/70 rounded-2xl p-5 shadow-sm watercolor-hover"
                 >
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
-                    style={{ backgroundColor: `${color}33`, color }}
+                    className="w-20 h-20 rounded-xl flex items-center justify-center mb-3"
+                    style={{ backgroundColor: `${color}22` }}
                   >
-                    <Icon size={20} />
+                    <Illustration size={64} color={color} />
                   </div>
                   <h3 className="font-caveat text-xl text-[#2A2A2A] mb-1">{s.title}</h3>
                   <p className="font-kalam text-sm text-[#5A5A5A]">{s.description}</p>
@@ -319,19 +359,39 @@ export default function AboutPage() {
             <p className="font-kalam text-[#5A5A5A] mt-2">{t('process.subtitle')}</p>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {(Array.isArray(steps) ? steps : []).map((s, idx) => (
-              <Reveal
-                key={idx}
-                delay={idx * 120}
-                className="p-5 rounded-2xl border border-[#EADFD0] bg-white/60"
-              >
-                <div className="font-caveat text-4xl text-[#A8D5BA] leading-none mb-1">
-                  0{idx + 1}
-                </div>
-                <h3 className="font-caveat text-xl text-[#2A2A2A] mb-1">{s.title}</h3>
-                <p className="font-kalam text-sm text-[#5A5A5A]">{s.description}</p>
-              </Reveal>
-            ))}
+            {(Array.isArray(steps) ? steps : []).map((s, idx) => {
+              const Illustration =
+                processIllustrations[idx % processIllustrations.length];
+              const color = palette[idx % palette.length];
+              return (
+                <Reveal
+                  key={idx}
+                  delay={idx * 120}
+                  className="p-5 rounded-2xl border border-[#EADFD0] bg-white/60 watercolor-hover"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${color}22` }}
+                    >
+                      <Illustration size={44} color={color} />
+                    </div>
+                    <div
+                      className="font-caveat text-3xl leading-none"
+                      style={{ color }}
+                    >
+                      0{idx + 1}
+                    </div>
+                  </div>
+                  <h3 className="font-caveat text-xl text-[#2A2A2A] mb-1">
+                    {s.title}
+                  </h3>
+                  <p className="font-kalam text-sm text-[#5A5A5A]">
+                    {s.description}
+                  </p>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
