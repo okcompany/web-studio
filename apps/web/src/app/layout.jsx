@@ -118,6 +118,218 @@ export default function RootLayout({ children }) {
         }
         .animate-wiggle { animation: wiggle 4s ease-in-out infinite; transform-origin: center; }
 
+        /* ---------------- Hand-drawn icon animations ---------------- */
+        /* Pencil gently nods as the line underneath is drawn. */
+        @keyframes pencil-nod {
+          0%, 100% { transform: rotate(0deg) translateY(0); }
+          50% { transform: rotate(-4deg) translateY(-1px); }
+        }
+        .icon-pencil-move { animation: pencil-nod 2.4s ease-in-out infinite; transform-origin: 40px 34px; }
+
+        /* Clock hands — minute hand spins quickly, hour crawls, speech bubble pops. */
+        @keyframes clock-fast { to { transform: rotate(360deg); } }
+        .icon-clock-fast { animation: clock-fast 3.5s linear infinite; }
+        .icon-clock-hour { animation: clock-fast 18s linear infinite; }
+        @keyframes pop-in {
+          0% { opacity: 0; transform: scale(0.6); }
+          60% { opacity: 1; transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+        .icon-clock-bubble { animation: pop-in 1.6s ease-out 0.6s both; transform-origin: 80px 32px; }
+
+        /* Handshake — gentle vertical pulse; flower grows up. */
+        @keyframes shake-pulse {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(1.5px); }
+        }
+        .icon-hands-shake { animation: shake-pulse 1.6s ease-in-out infinite; }
+        @keyframes flower-grow {
+          0% { transform: scale(0.2) translateY(14px); opacity: 0; }
+          60% { opacity: 1; }
+          100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .icon-hands-flower { animation: flower-grow 2.2s ease-out 0.3s both; }
+
+        /* Browser content bars draw in from left. */
+        @keyframes bar-slide {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+        .icon-browser-bar {
+          transform-origin: left center;
+          animation: bar-slide 0.7s cubic-bezier(.4,1.3,.5,1) forwards;
+          transform: scaleX(0);
+        }
+
+        /* Code caret blink. */
+        @keyframes caret-blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+        .icon-caret { animation: caret-blink 1s steps(1) infinite; }
+
+        /* Paint brush dabs, drop falls. */
+        @keyframes brush-dab {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(8deg); }
+        }
+        .icon-palette-brush { animation: brush-dab 2.4s ease-in-out infinite; }
+        @keyframes drop-fall {
+          0% { transform: translateY(-18px); opacity: 0; }
+          30% { opacity: 1; }
+          100% { transform: translateY(0); opacity: 0.8; }
+        }
+        .icon-paint-drop { animation: drop-fall 2.6s ease-in 0.5s infinite; }
+
+        /* Wrench rotates around bolt. */
+        @keyframes wrench-spin {
+          0% { transform: rotate(0deg); }
+          50% { transform: rotate(14deg); }
+          100% { transform: rotate(0deg); }
+        }
+        .icon-wrench-spin { animation: wrench-spin 1.8s ease-in-out infinite; }
+
+        /* Magnifier lens scans back and forth. */
+        @keyframes magnifier-scan {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(-18px, 6px); }
+        }
+        .icon-magnifier-scan { animation: magnifier-scan 3s ease-in-out infinite; }
+
+        /* Compass body rotates drawing the circle. */
+        @keyframes compass-spin { to { transform: rotate(360deg); } }
+        .icon-compass-spin { animation: compass-spin 5s linear infinite; }
+        @keyframes compass-draw {
+          from { stroke-dashoffset: 160; }
+          to { stroke-dashoffset: 0; }
+        }
+        .icon-compass-draw { stroke-dasharray: 160; animation: compass-draw 5s linear infinite; }
+
+        /* Hammer swings, nail sinks. */
+        @keyframes hammer-swing {
+          0%, 30%, 100% { transform: rotate(-30deg); }
+          45%, 55% { transform: rotate(10deg); }
+        }
+        .icon-hammer-swing { animation: hammer-swing 1.4s ease-in-out infinite; }
+        @keyframes nail-sink {
+          0%, 40% { transform: translateY(0); }
+          50%, 100% { transform: translateY(3px); }
+        }
+        .icon-nail-sink { animation: nail-sink 1.4s ease-in-out infinite; }
+
+        /* Rocket lifts off in a loop with flame flicker. */
+        @keyframes rocket-lift {
+          0% { transform: translateY(0); }
+          60% { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
+        }
+        .icon-rocket-lift { animation: rocket-lift 2.6s ease-in-out infinite; }
+        @keyframes flame-flicker {
+          0%, 100% { transform: scaleY(1); }
+          50% { transform: scaleY(1.25); }
+        }
+        .icon-rocket-flame { animation: flame-flicker 0.4s ease-in-out infinite; }
+        @keyframes smoke-puff {
+          0%, 100% { opacity: 0.7; transform: translateY(0); }
+          50% { opacity: 0.35; transform: translateY(3px); }
+        }
+        .icon-rocket-smoke { animation: smoke-puff 2.6s ease-in-out infinite; }
+
+        /* ---------------- "How we work" gentleman walker ---------------- */
+        .gentleman-track {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: -44px;
+          height: 72px;
+          z-index: 5;
+        }
+        .gentleman-walk {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 60px;
+          animation: gentleman-stroll 14s linear infinite;
+        }
+        @keyframes gentleman-stroll {
+          0%   { left: 0; }
+          45%  { left: calc(100% - 60px); }
+          50%  { left: calc(100% - 60px); transform: scaleX(-1); }
+          95%  { left: 0; transform: scaleX(-1); }
+          100% { left: 0; transform: scaleX(1); }
+        }
+        @keyframes gentleman-bob {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-2px); }
+        }
+        .gentleman-walk svg { animation: gentleman-bob 0.6s ease-in-out infinite; }
+
+        @keyframes leg-front-step {
+          0%, 100% { transform: rotate(-12deg); }
+          50% { transform: rotate(12deg); }
+        }
+        @keyframes leg-back-step {
+          0%, 100% { transform: rotate(12deg); }
+          50% { transform: rotate(-12deg); }
+        }
+        .gentleman-leg { transform-origin: 30px 52px; }
+        .gentleman-leg.leg-front { animation: leg-front-step 0.6s ease-in-out infinite; }
+        .gentleman-leg.leg-back  { animation: leg-back-step  0.6s ease-in-out infinite; }
+
+        @keyframes cane-tap {
+          0%, 40%, 100% { transform: translateY(0); }
+          50% { transform: translateY(2px); }
+        }
+        .gentleman-cane { animation: cane-tap 0.6s ease-in-out infinite; transform-origin: 48px 46px; }
+
+        /* Process cards — emphasised when the gentleman passes over each
+           quarter of the stroll animation. Card #1 lights up ~0-10%,
+           card #2 ~12-22%, card #3 ~24-34%, card #4 ~36-46%. We only
+           animate the inner highlight layer (see .process-card::before
+           below) so we don't fight Reveal's fade-up opacity animation. */
+        .process-card { position: relative; }
+        .process-card:nth-child(1) { animation: hl-card1 14s linear infinite; }
+        .process-card:nth-child(2) { animation: hl-card2 14s linear infinite; }
+        .process-card:nth-child(3) { animation: hl-card3 14s linear infinite; }
+        .process-card:nth-child(4) { animation: hl-card4 14s linear infinite; }
+        @keyframes hl-card1 {
+          0%, 10%, 50%, 100% {
+            box-shadow: 0 0 0 0 transparent;
+            filter: saturate(0.85);
+          }
+          3%, 7% {
+            box-shadow: 0 0 0 3px var(--accent, #A8D5BA);
+            filter: saturate(1.2);
+          }
+        }
+        @keyframes hl-card2 {
+          0%, 12%, 26%, 50%, 100% {
+            box-shadow: 0 0 0 0 transparent;
+            filter: saturate(0.85);
+          }
+          15%, 22% {
+            box-shadow: 0 0 0 3px var(--accent, #F0C5A9);
+            filter: saturate(1.2);
+          }
+        }
+        @keyframes hl-card3 {
+          0%, 24%, 38%, 50%, 100% {
+            box-shadow: 0 0 0 0 transparent;
+            filter: saturate(0.85);
+          }
+          27%, 34% {
+            box-shadow: 0 0 0 3px var(--accent, #D4C5F9);
+            filter: saturate(1.2);
+          }
+        }
+        @keyframes hl-card4 {
+          0%, 36%, 50%, 100% {
+            box-shadow: 0 0 0 0 transparent;
+            filter: saturate(0.85);
+          }
+          39%, 46% {
+            box-shadow: 0 0 0 3px var(--accent, #BEE3DB);
+            filter: saturate(1.2);
+          }
+        }
+
         /* Sticker-style shadow with colored rim */
         .sticker-shadow {
           box-shadow: 0 3px 0 -1px rgba(240, 197, 169, 0.9),
@@ -180,9 +392,35 @@ export default function RootLayout({ children }) {
           .spin-slow,
           .animate-heartbeat,
           .animate-wiggle,
-          .heart-burst-particle {
+          .heart-burst-particle,
+          .icon-pencil-move,
+          .icon-clock-fast,
+          .icon-clock-hour,
+          .icon-clock-bubble,
+          .icon-hands-shake,
+          .icon-hands-flower,
+          .icon-browser-bar,
+          .icon-caret,
+          .icon-palette-brush,
+          .icon-paint-drop,
+          .icon-wrench-spin,
+          .icon-magnifier-scan,
+          .icon-compass-spin,
+          .icon-compass-draw,
+          .icon-hammer-swing,
+          .icon-nail-sink,
+          .icon-rocket-lift,
+          .icon-rocket-flame,
+          .icon-rocket-smoke,
+          .gentleman-walk,
+          .gentleman-walk svg,
+          .gentleman-leg,
+          .gentleman-cane,
+          .process-card {
             animation: none !important;
           }
+          .process-card { filter: none; opacity: 1; }
+          .icon-browser-bar { transform: scaleX(1); }
           .hand-drawn-animation { stroke-dashoffset: 0; }
           .fade-up { opacity: 1; }
         }

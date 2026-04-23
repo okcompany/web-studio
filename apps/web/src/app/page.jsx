@@ -17,14 +17,17 @@ import {
   TestimonialsSection,
   FaqSection,
 } from "../components/HomeSections";
+import { ArrowRight, Send } from "lucide-react";
 import {
-  ArrowRight,
-  Send,
-  Palette,
-  Code2,
-  Sparkles,
-  Wrench,
-} from "lucide-react";
+  IconBrowserWindow,
+  IconCodeBrackets,
+  IconPalette,
+  IconWrenchBolt,
+  IconMagnifier,
+  IconCompass,
+  IconHammerNail,
+  IconRocket,
+} from "../components/HandDrawnIcons";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function HomePage() {
@@ -425,7 +428,12 @@ function NewsTeaserSection() {
 function ServicesSection() {
   const { t } = useLanguage();
   const items = t("services.items");
-  const icons = [Palette, Code2, Sparkles, Wrench];
+  const illustrations = [
+    IconBrowserWindow,
+    IconCodeBrackets,
+    IconPalette,
+    IconWrenchBolt,
+  ];
   const palette = ["#A8D5BA", "#F0C5A9", "#D4C5F9", "#BEE3DB"];
 
   return (
@@ -442,7 +450,7 @@ function ServicesSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {(Array.isArray(items) ? items : []).map((service, idx) => {
-            const Icon = icons[idx % icons.length];
+            const Illustration = illustrations[idx % illustrations.length];
             const color = palette[idx % palette.length];
             return (
               <Reveal
@@ -451,10 +459,10 @@ function ServicesSection() {
                 className="relative bg-white/70 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow watercolor-hover"
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                  style={{ backgroundColor: `${color}33`, color }}
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4"
+                  style={{ backgroundColor: `${color}22` }}
                 >
-                  <Icon size={24} />
+                  <Illustration size={64} color={color} />
                 </div>
                 <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-2">
                   {service.title}
@@ -474,6 +482,8 @@ function ServicesSection() {
 function ProcessSection() {
   const { t } = useLanguage();
   const steps = t("process.steps");
+  const illustrations = [IconMagnifier, IconCompass, IconHammerNail, IconRocket];
+  const accents = ["#A8D5BA", "#F0C5A9", "#D4C5F9", "#BEE3DB"];
   return (
     <section className="py-16 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
@@ -486,25 +496,103 @@ function ProcessSection() {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(Array.isArray(steps) ? steps : []).map((step, idx) => (
-            <Reveal
-              key={idx}
-              delay={idx * 120}
-              className="relative p-6 rounded-2xl border border-[#EADFD0] bg-white/60"
-            >
-              <div className="font-caveat text-5xl text-[#A8D5BA] leading-none mb-2">
-                0{idx + 1}
-              </div>
-              <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-1">
-                {step.title}
-              </h3>
-              <p className="font-kalam text-[#5A5A5A]">{step.description}</p>
-            </Reveal>
-          ))}
+        <div className="relative">
+          {/* Gentleman with top hat strolling along the top edge of the cards */}
+          <GentlemanWalker />
+
+          <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 process-grid">
+            {(Array.isArray(steps) ? steps : []).map((step, idx) => {
+              const Illustration = illustrations[idx % illustrations.length];
+              const color = accents[idx % accents.length];
+              return (
+                <Reveal
+                  key={idx}
+                  delay={idx * 120}
+                  className="process-card relative p-6 rounded-2xl border border-[#EADFD0] bg-white/60 transition-all"
+                  style={{ "--accent": color }}
+                >
+                  <div
+                    className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white border border-[#EADFD0] flex items-center justify-center font-caveat text-lg text-[#2A2A2A]"
+                    style={{ color }}
+                  >
+                    0{idx + 1}
+                  </div>
+                  <div
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4"
+                    style={{ backgroundColor: `${color}22` }}
+                  >
+                    <Illustration size={64} color={color} />
+                  </div>
+                  <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-1">
+                    {step.title}
+                  </h3>
+                  <p className="font-kalam text-[#5A5A5A]">{step.description}</p>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+// A small gentleman with a top hat and a cane who strolls along the top edge
+// of the "How we work" grid. Uses CSS-only translation for the horizontal
+// walk and a subtle body/leg wiggle so it feels hand-animated. Hidden on
+// very small screens where the grid stacks vertically.
+function GentlemanWalker() {
+  return (
+    <div className="gentleman-track pointer-events-none hidden md:block">
+      <div className="gentleman-walk">
+        <svg width="60" height="72" viewBox="0 0 60 72" aria-hidden="true">
+          {/* hat */}
+          <ellipse cx="30" cy="17" rx="14" ry="2.5" fill="#2A2A2A" />
+          <rect x="22" y="4" width="16" height="14" fill="#2A2A2A" />
+          <rect x="22" y="14" width="16" height="2" fill="#B0463D" />
+          {/* head */}
+          <circle cx="30" cy="23" r="5" fill="#F7E5B8" stroke="#8A6A3A" strokeWidth="1.3" />
+          {/* mustache */}
+          <path
+            d="M26 25 Q28 27 30 25 Q32 27 34 25"
+            stroke="#5A3E16"
+            strokeWidth="1.4"
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* body / coat */}
+          <path
+            d="M22 28 L38 28 L40 52 L20 52 Z"
+            fill="#2A2A2A"
+            stroke="#111"
+            strokeWidth="1"
+          />
+          {/* tie */}
+          <polygon points="30,28 28,32 30,38 32,32" fill="#B0463D" />
+          {/* arm + cane */}
+          <line x1="38" y1="32" x2="48" y2="46" stroke="#2A2A2A" strokeWidth="3" strokeLinecap="round" />
+          <line
+            x1="48"
+            y1="46"
+            x2="48"
+            y2="62"
+            stroke="#8A6A3A"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            className="gentleman-cane"
+          />
+          {/* legs — alternate "step" via CSS */}
+          <g className="gentleman-leg leg-back">
+            <line x1="24" y1="52" x2="20" y2="66" stroke="#2A2A2A" strokeWidth="3.2" strokeLinecap="round" />
+            <line x1="20" y1="66" x2="16" y2="68" stroke="#2A2A2A" strokeWidth="3.2" strokeLinecap="round" />
+          </g>
+          <g className="gentleman-leg leg-front">
+            <line x1="34" y1="52" x2="40" y2="66" stroke="#2A2A2A" strokeWidth="3.2" strokeLinecap="round" />
+            <line x1="40" y1="66" x2="44" y2="68" stroke="#2A2A2A" strokeWidth="3.2" strokeLinecap="round" />
+          </g>
+        </svg>
+      </div>
+    </div>
   );
 }
 

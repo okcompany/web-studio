@@ -3,14 +3,19 @@
 import { useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import Reveal from "./Reveal";
-import { Zap, Heart, Scale, Quote, ChevronDown } from "lucide-react";
+import { Quote, ChevronDown } from "lucide-react";
+import {
+  IconPencilLine,
+  IconFastClock,
+  IconHandshake,
+} from "./HandDrawnIcons";
 
 // "Why work with me?" — three hand-drawn cards on a pale paper background.
 export function WhyMeSection() {
   const { t } = useLanguage();
   const items = t("home.whyMe.items");
-  const icons = [Zap, Heart, Scale];
   const palette = ["#A8D5BA", "#F0C5A9", "#D4C5F9"];
+  const illustrations = [IconPencilLine, IconFastClock, IconHandshake];
   return (
     <section className="py-16 px-6 md:px-12 relative">
       <div className="max-w-6xl mx-auto">
@@ -24,7 +29,7 @@ export function WhyMeSection() {
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {(Array.isArray(items) ? items : []).map((item, idx) => {
-            const Icon = icons[idx % icons.length];
+            const Illustration = illustrations[idx % illustrations.length];
             const color = palette[idx % palette.length];
             return (
               <Reveal
@@ -33,10 +38,10 @@ export function WhyMeSection() {
                 className="relative bg-white/80 rounded-2xl p-6 border border-[#EADFD0] watercolor-hover"
               >
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
-                  style={{ backgroundColor: `${color}33`, color }}
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4"
+                  style={{ backgroundColor: `${color}22` }}
                 >
-                  <Icon size={26} />
+                  <Illustration size={64} color={color} />
                 </div>
                 <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-2">
                   {item.title}
