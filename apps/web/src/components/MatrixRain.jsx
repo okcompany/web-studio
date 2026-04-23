@@ -18,6 +18,7 @@ import { useEffect, useRef } from "react";
  */
 export default function MatrixRain({
   color = "#2dbf6e",
+  background = "rgba(255,255,255,0.12)",
   density = 1,
   speed = 1,
   className = "",
@@ -56,7 +57,7 @@ export default function MatrixRain({
     }
 
     function drawFrame() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+      ctx.fillStyle = background;
       ctx.fillRect(0, 0, width, height);
       ctx.font = `${FONT_SIZE}px "Courier New", monospace`;
       ctx.fillStyle = color;
@@ -77,8 +78,7 @@ export default function MatrixRain({
     ro.observe(canvas);
 
     if (reduceMotion) {
-      ctx.fillStyle = "rgba(0, 0, 0, 1)";
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
       drawFrame();
       return () => ro.disconnect();
     }
@@ -93,14 +93,13 @@ export default function MatrixRain({
       }
       raf = requestAnimationFrame(loop);
     }
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, width, height);
+    ctx.clearRect(0, 0, width, height);
     raf = requestAnimationFrame(loop);
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, [color, density, speed]);
+  }, [color, background, density, speed]);
 
   return (
     <div
