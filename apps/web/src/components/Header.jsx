@@ -20,7 +20,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="relative py-6 px-6 md:px-12">
+    <header className="relative py-6 px-4 sm:px-6 md:px-12">
       {/* Цветная рисованная граница заголовка */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <svg
@@ -53,9 +53,9 @@ export default function Header() {
 
       <div className="max-w-7xl mx-auto flex items-center justify-between relative">
         {/* Логотип */}
-        <div className="flex items-center">
-          <a href="/" className="relative group watercolor-hover">
-            <div className="font-caveat text-2xl md:text-3xl font-bold text-[#2A2A2A] relative z-10">
+        <div className="flex items-center min-w-0">
+          <a href="/" className="relative group watercolor-hover max-w-full">
+            <div className="font-caveat text-lg sm:text-2xl md:text-3xl font-bold text-[#2A2A2A] relative z-10 whitespace-nowrap leading-tight">
               <TypewriterText text="Web Studio Oleh Kalchenko" delay={4000} />
             </div>
             {/* Цветная рисованная подчеркивание */}
@@ -76,7 +76,7 @@ export default function Header() {
           </a>
         </div>
 
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-3 sm:space-x-6 flex-shrink-0">
           {/* Переключатель языков */}
           <div className="relative">
             <button

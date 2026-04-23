@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PaperPlaneAnimation from "../../components/PaperPlaneAnimation";
 import FloatingShapes from "../../components/FloatingShapes";
-import { Send, MessageCircle, User, FileText, Clock, Globe2, MapPin, Languages } from "lucide-react";
+import { Send, MessageCircle, User, Mail, FileText, Clock, Globe2, MapPin, Languages } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import Reveal from "../../components/Reveal";
 import { FaqSection } from "../../components/HomeSections";

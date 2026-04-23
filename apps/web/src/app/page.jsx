@@ -74,7 +74,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Текстовый контент */}
             <div
-              className={`space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              className={`space-y-8 transition-all duration-1000 order-2 lg:order-1 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
               {/* Лейбл студии */}
               <div className="relative">
@@ -190,7 +190,7 @@ export default function HomePage() {
 
             {/* Визуальный элемент — слайдшоу фото в рисованной рамке */}
             <div
-              className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              className={`relative transition-all duration-1000 delay-300 order-1 lg:order-2 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
               <HandDrawnSlideshow />
               <div className="mt-6 flex justify-center">
