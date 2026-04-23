@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
@@ -21,10 +22,6 @@ export default function HomePage() {
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
-  const handleTelegramContact = () => {
-    window.open("https://t.me/OKwebDesign_bot", "_blank", "noopener,noreferrer");
-  };
 
   return (
     <div className="min-h-screen bg-[#FEFEFE]">
@@ -128,9 +125,9 @@ export default function HomePage() {
 
               {/* CTA кнопка */}
               <div className="relative pt-4">
-                <button
-                  onClick={handleTelegramContact}
-                  className="relative group watercolor-hover"
+                <Link
+                  to="/contact"
+                  className="relative group watercolor-hover inline-block"
                 >
                   {/* Цветная рисованная граница кнопки */}
                   <svg
@@ -175,7 +172,7 @@ export default function HomePage() {
                       className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
                     />
                   </div>
-                </button>
+                </Link>
               </div>
             </div>
 

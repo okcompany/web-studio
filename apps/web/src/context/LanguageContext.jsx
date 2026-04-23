@@ -21,7 +21,7 @@ export const useLanguage = () => {
 const tFactory = (language) => (key) => {
   if (!key) return "";
   const keys = key.split(".");
-  let value = translations[language] || translations["de"];
+  let value = translations[language] || translations["en"] || translations["de"];
 
   for (const k of keys) {
     if (value === undefined || value === null) return key;
@@ -44,26 +44,27 @@ function writeCookie(name, value, days = 365) {
 }
 
 function detectFromNavigator() {
-  if (typeof navigator === "undefined") return null;
-  const langs = navigator.languages && navigator.languages.length
-    ? navigator.languages
-    : [navigator.language || "de"];
+  if (typeof navigator === "undefined") return "en";
+  const langs =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || "en"];
   for (const raw of langs) {
     const base = String(raw).toLowerCase().slice(0, 2);
-    if (SUPPORTED.includes(base)) return base;
+    if (base === "ru" || base === "de") return base;
   }
-  return null;
+  return "en";
 }
 
 export const LanguageProvider = ({ children }) => {
-  const [currentLanguage, setCurrentLanguage] = useState("de");
-  const [t, setT] = useState(() => tFactory("de"));
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [t, setT] = useState(() => tFactory("en"));
 
   useEffect(() => {
     setT(() => tFactory(currentLanguage));
   }, [currentLanguage]);
 
-  // Load preferred language: cookie → localStorage → Accept-Language → default
+  // Resolution order: cookie → localStorage → navigator (ru/de else en)
   useEffect(() => {
     try {
       const fromCookie = readCookie(COOKIE_NAME);
@@ -81,17 +82,15 @@ export const LanguageProvider = ({ children }) => {
         return;
       }
       const fromNavigator = detectFromNavigator();
-      if (fromNavigator) {
-        setCurrentLanguage(fromNavigator);
-        writeCookie(COOKIE_NAME, fromNavigator);
-      }
+      setCurrentLanguage(fromNavigator);
+      writeCookie(COOKIE_NAME, fromNavigator);
     } catch (_) {
-      // ignore environment errors, keep default
+      // keep default `en`
     }
   }, []);
 
   const changeLanguage = (language) => {
-    const next = SUPPORTED.includes(language) ? language : "de";
+    const next = SUPPORTED.includes(language) ? language : "en";
     setCurrentLanguage(next);
     try {
       if (typeof localStorage !== "undefined") {
