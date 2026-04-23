@@ -1,7 +1,9 @@
 import { Hono } from 'hono';
 import type { Handler } from 'hono/types';
 import updatedFetch from '../src/__create/fetch';
+import * as adminLoginRoute from '../src/app/api/admin/login/route.js';
 import * as checkDbRoute from '../src/app/api/check-db/route.js';
+import * as contactRoute from '../src/app/api/contact/route.js';
 import * as createDbRoute from '../src/app/api/create-db/route.js';
 import * as newsRoute from '../src/app/api/news/route.js';
 import * as portfolioRoute from '../src/app/api/portfolio/route.js';
@@ -18,7 +20,9 @@ if (globalThis.fetch) {
 // Register routes
 function registerRoutes() {
   const routes = [
+    { path: '/admin/login', module: adminLoginRoute },
     { path: '/check-db', module: checkDbRoute },
+    { path: '/contact', module: contactRoute },
     { path: '/create-db', module: createDbRoute },
     { path: '/news', module: newsRoute },
     { path: '/portfolio', module: portfolioRoute },
