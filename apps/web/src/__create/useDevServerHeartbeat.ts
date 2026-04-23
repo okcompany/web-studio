@@ -1,22 +1,12 @@
 'use client';
 
-import { useIdleTimer } from 'react-idle-timer';
-
+/**
+ * Dev-only hook that pings the dev server to keep it alive while the user is
+ * active. In production this is a no-op so we don't pull `react-idle-timer`
+ * into the SSR bundle (its ESM named exports fail on some Node runtimes).
+ */
 export function useDevServerHeartbeat() {
-  useIdleTimer({
-    throttle: 60_000 * 3,
-    timeout: 60_000,
-    onAction: () => {
-      // HACK: at time of writing, we run the dev server on a proxy url that
-      // when requested, ensures that the dev server's life is extended. If
-      // the user is using a page or is active in it in the app, but when the
-      // user has popped out their preview, they no longer can rely on the
-      // app to do this. This hook ensures it stays alive.
-      fetch('/', {
-        method: 'GET',
-      }).catch((error) => {
-        // this is a no-op, we just want to keep the dev server alive
-      });
-    },
-  });
+  // no-op in production builds
+  if (typeof window === 'undefined') return;
+  if (!import.meta.env?.DEV) return;
 }
