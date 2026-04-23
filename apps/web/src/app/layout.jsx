@@ -284,11 +284,25 @@ export default function RootLayout({ children }) {
            card #2 ~12-22%, card #3 ~24-34%, card #4 ~36-46%. We only
            animate the inner highlight layer (see .process-card::before
            below) so we don't fight Reveal's fade-up opacity animation. */
-        .process-card { position: relative; }
-        .process-card:nth-child(1) { animation: hl-card1 14s linear infinite; }
-        .process-card:nth-child(2) { animation: hl-card2 14s linear infinite; }
-        .process-card:nth-child(3) { animation: hl-card3 14s linear infinite; }
-        .process-card:nth-child(4) { animation: hl-card4 14s linear infinite; }
+        /* Process cards are wrapped in Reveal which applies .fade-up
+           (opacity: 0 by default). We run BOTH animations via a
+           comma-separated animation list so the fade-up still plays
+           and ends at opacity 1, while the highlight loops over it. */
+        .process-card { position: relative; opacity: 1; }
+        .process-card.fade-up { opacity: 0; }
+        .process-card.fade-up.in-view { opacity: 1; }
+        .process-card.fade-up.in-view:nth-child(1) {
+          animation: fadeUp 0.8s ease-out forwards, hl-card1 14s linear 0.8s infinite;
+        }
+        .process-card.fade-up.in-view:nth-child(2) {
+          animation: fadeUp 0.8s ease-out forwards, hl-card2 14s linear 0.8s infinite;
+        }
+        .process-card.fade-up.in-view:nth-child(3) {
+          animation: fadeUp 0.8s ease-out forwards, hl-card3 14s linear 0.8s infinite;
+        }
+        .process-card.fade-up.in-view:nth-child(4) {
+          animation: fadeUp 0.8s ease-out forwards, hl-card4 14s linear 0.8s infinite;
+        }
         @keyframes hl-card1 {
           0%, 10%, 50%, 100% {
             box-shadow: 0 0 0 0 transparent;
