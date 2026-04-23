@@ -404,12 +404,14 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script type="module" src="/src/__create/dev-error-overlay.js"></script>
+        {import.meta.env.DEV ? (
+          <script type="module" src="/src/__create/dev-error-overlay.js"></script>
+        ) : null}
         <LoadFonts />
       </head>
       <body>
-        <ClientOnly loader={() => children} />
-        <HotReloadIndicator />
+        <ErrorBoundaryWrapper>{children}</ErrorBoundaryWrapper>
+        {import.meta.env.DEV ? <HotReloadIndicator /> : null}
         <Toaster position="bottom-right" />
         <ScrollRestoration />
         <Scripts />
