@@ -2,9 +2,6 @@
 	"name": "web",
 	"private": true,
 	"type": "module",
-	"engines": {
-		"node": "22.x"
-	},
 	"scripts": {
 		"dev": "npx react-router dev",
 		"build": "npx react-router build",
@@ -100,6 +97,13 @@
 		"vitest": "^3.2.4"
 	},
 	"overrides": {
-		"next-themes": "^0.3.0"
+		"next-themes": "^0.3.0",
+		"rimraf": "^5.0.10",
+		"glob": "^11.0.0",
+		"inflight": "npm:@isaacs/inflight@^1.0.6",
+		"tar": "^7.4.3",
+		"npmlog": "^7.0.1",
+		"are-we-there-yet": "^4.0.2",
+		"gauge": "^5.0.2"
 	}
 }

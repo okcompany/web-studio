@@ -1,15 +1,45 @@
 "use client";
 
 import { useState } from "react";
+import { Link, useLocation } from "react-router";
 import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { languages } from "../utils/i18n";
 import TypewriterText from "./TypewriterText";
 
+// Ink-style wavy underline drawn beneath active / hovered nav links.
+// The stroke is dashed + animated so it draws itself on hover/active.
+function WavyUnderline({ color = "#F0C5A9", className = "" }) {
+  return (
+    <svg
+      className={`absolute left-0 -bottom-1 w-full h-2 pointer-events-none ${className}`}
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M2,6 Q20,1 40,6 T78,6 T118,6"
+        stroke={color}
+        strokeWidth="2.4"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+const NAV_ACCENTS = ["#A8D5BA", "#F0C5A9", "#D4C5F9", "#BEE3DB", "#F7C880"];
+
+function isActiveRoute(pathname, href) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const { currentLanguage, changeLanguage, t } = useLanguage();
+  const location = useLocation();
 
   const navItems = [
     { label: t("nav.home"), href: "/" },
@@ -153,32 +183,43 @@ export default function Header() {
           </div>
 
           {/* Десктопная навигация */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="relative group watercolor-hover font-kalam text-lg text-[#2A2A2A] hover:text-[#1A1A1A] transition-colors duration-300"
-              >
-                <span className="relative z-10">{item.label}</span>
-                {/* Цветная рисованная окружность при наведении */}
-                <svg
-                  className="absolute -inset-2 w-auto h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  viewBox="0 0 80 32"
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+            {navItems.map((item, index) => {
+              const active = isActiveRoute(location.pathname, item.href);
+              const accent = NAV_ACCENTS[index % NAV_ACCENTS.length];
+              return (
+                <Link
+                  key={index}
+                  to={item.href}
+                  className={`nav-link relative group font-kalam text-lg px-1 pb-1 transition-colors duration-300 ${
+                    active
+                      ? "text-[#2A2A2A] font-semibold"
+                      : "text-[#5A5A5A] hover:text-[#2A2A2A]"
+                  }`}
+                  aria-current={active ? "page" : undefined}
                 >
-                  <ellipse
-                    cx="40"
-                    cy="16"
-                    rx="38"
-                    ry="14"
-                    stroke="#D4C5F9"
-                    strokeWidth="2"
-                    fill="rgba(212, 197, 249, 0.2)"
-                    className="hand-drawn-animation"
+                  {/* small hand-drawn dot marker that appears on active */}
+                  <span
+                    className={`absolute -left-2 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      active ? "opacity-100 scale-100" : "opacity-0 scale-0"
+                    }`}
+                    style={{ backgroundColor: accent }}
                   />
-                </svg>
-              </a>
-            ))}
+                  <span className="relative z-10">{item.label}</span>
+                  {/* wavy underline — visible when active or hovered */}
+                  <span
+                    className={`block absolute left-0 -bottom-1 w-full transition-all duration-300 ${
+                      active
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
+                    }`}
+                    aria-hidden="true"
+                  >
+                    <WavyUnderline color={accent} />
+                  </span>
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Мобильная кнопка меню */}
@@ -234,31 +275,36 @@ export default function Header() {
               />
             </svg>
 
-            <nav className="flex flex-col py-6 px-6 space-y-4">
-              {navItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="relative group watercolor-hover font-kalam text-lg text-[#2A2A2A] py-2"
-                >
-                  <span className="relative z-10">{item.label}</span>
-                  {/* Цветная рисованная линия под каждым элементом */}
-                  <svg
-                    className="absolute bottom-0 left-0 w-full h-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    viewBox="0 0 200 8"
+            <nav className="flex flex-col py-6 px-6 space-y-2">
+              {navItems.map((item, index) => {
+                const active = isActiveRoute(location.pathname, item.href);
+                const accent = NAV_ACCENTS[index % NAV_ACCENTS.length];
+                return (
+                  <Link
+                    key={index}
+                    to={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`relative font-kalam text-lg py-2 px-3 rounded-lg transition-colors duration-300 flex items-center gap-3 ${
+                      active
+                        ? "text-[#2A2A2A] font-semibold"
+                        : "text-[#5A5A5A]"
+                    }`}
+                    style={
+                      active ? { backgroundColor: `${accent}22` } : undefined
+                    }
                   >
-                    <path
-                      d="M5,4 Q100,2 195,4"
-                      stroke="#A8D5BA"
-                      strokeWidth="2"
-                      fill="none"
+                    <span
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        active ? "opacity-100 scale-100" : "opacity-30 scale-75"
+                      }`}
+                      style={{ backgroundColor: accent }}
                     />
-                  </svg>
-                  {/* Цветной фон при наведении */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#E8F4F8] to-[#F0E8D6] opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-md"></div>
-                </a>
-              ))}
+                    <span className="relative z-10 flex-1">{item.label}</span>
+                    {active && <WavyUnderline color={accent} />}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>
