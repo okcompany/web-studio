@@ -10,6 +10,7 @@ import HighlightedSlogan from "../components/HighlightedSlogan";
 import PaperPlaneAnimation from "../components/PaperPlaneAnimation";
 import BusAnimation from "../components/BusAnimation";
 import HandDrawnSlideshow from "../components/HandDrawnSlideshow";
+import MadeInBadge from "../components/MadeInBadge";
 import {
   WhyMeSection,
   TechStackSection,
@@ -191,6 +192,9 @@ export default function HomePage() {
               className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
               <HandDrawnSlideshow />
+              <div className="mt-6 flex justify-center">
+                <MadeInBadge rotate={-4} />
+              </div>
             </div>
           </div>
         </div>

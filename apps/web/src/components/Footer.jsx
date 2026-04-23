@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "react-router";
-import { Mail, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import MadeInBadge from "./MadeInBadge";
 
@@ -54,21 +54,20 @@ export default function Footer() {
           </div>
           <ul className="space-y-2 font-kalam text-[#5A5A5A]">
             <li className="flex items-center gap-2">
-              <Mail size={16} />
-              <Link
-                to="/contact"
-                className="hover:text-[#2A2A2A] transition-colors"
-              >
-                kalchenko2022@gmail.com
-              </Link>
-            </li>
-            <li className="flex items-center gap-2">
               <MessageCircle size={16} />
               <Link
                 to="/contact"
                 className="hover:text-[#2A2A2A] transition-colors"
               >
                 @OKwebDesign_bot
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 mt-1 px-3 py-1.5 rounded-full bg-[#F0C5A9] text-[#2A2A2A] text-sm font-kalam hover:bg-[#E8B894] transition-colors sticker-shadow"
+              >
+                {t("cta.button")}
               </Link>
             </li>
           </ul>

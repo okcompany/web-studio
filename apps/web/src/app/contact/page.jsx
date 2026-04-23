@@ -6,10 +6,11 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PaperPlaneAnimation from "../../components/PaperPlaneAnimation";
 import FloatingShapes from "../../components/FloatingShapes";
-import { Send, Mail, MessageCircle, User, FileText, Clock, Globe2, MapPin, Languages } from "lucide-react";
+import { Send, MessageCircle, User, FileText, Clock, Globe2, MapPin, Languages } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import Reveal from "../../components/Reveal";
 import { FaqSection } from "../../components/HomeSections";
+import MadeInBadge from "../../components/MadeInBadge";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -180,35 +181,6 @@ export default function ContactPage() {
                   <div className="relative space-y-4">
                     <div className="flex items-center space-x-4">
                       <div className="relative">
-                        <Mail size={24} className="text-[#5A5A5A]" />
-                        {/* Цветная рисованная окружность вокруг иконки */}
-                        <svg
-                          className="absolute -inset-2 w-8 h-8"
-                          viewBox="0 0 32 32"
-                        >
-                          <circle
-                            cx="16"
-                            cy="16"
-                            r="14"
-                            stroke="#A8D5BA"
-                            strokeWidth="2"
-                            fill="none"
-                            transform="rotate(10 16 16)"
-                          />
-                        </svg>
-                      </div>
-                      <div>
-                        <a
-                          href="mailto:kalchenko2022@gmail.com"
-                          className="font-kalam text-lg text-[#2A2A2A] hover:text-[#5A5A5A] transition-colors"
-                        >
-                          kalchenko2022@gmail.com
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                      <div className="relative">
                         <MessageCircle size={24} className="text-[#5A5A5A]" />
                         {/* Цветная рисованная рамка вокруг иконки */}
                         <svg
@@ -252,6 +224,9 @@ export default function ContactPage() {
 
             {/* Контактная форма */}
             <div className="lg:col-span-2">
+              <div className="mb-4 flex justify-end">
+                <MadeInBadge rotate={-7} size="sm" />
+              </div>
               {isSubmitted ? (
                 <div className="relative text-center py-16">
                   {/* Сообщение об успехе с цветной рисованной рамкой */}

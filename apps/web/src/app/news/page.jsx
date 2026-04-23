@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import BusAnimation from "../../components/BusAnimation";
 import FloatingShapes from "../../components/FloatingShapes";
+import MadeInBadge from "../../components/MadeInBadge";
 import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -43,6 +44,12 @@ export default function NewsPage() {
 
       {/* Заголовок страницы */}
       <section className="relative py-16 px-6 md:px-12">
+        <div className="hidden md:block absolute top-24 right-8 lg:right-14 z-10">
+          <MadeInBadge rotate={-5} size="sm" />
+        </div>
+        <div className="md:hidden flex justify-center mb-4">
+          <MadeInBadge rotate={-5} size="sm" />
+        </div>
         <div className="max-w-6xl mx-auto text-center">
           <div className="relative inline-block">
             <h1 className="font-caveat text-5xl md:text-7xl font-bold text-[#2A2A2A] mb-4">

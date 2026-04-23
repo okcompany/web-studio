@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Reveal from '../../components/Reveal';
 import FloatingShapes from '../../components/FloatingShapes';
+import MadeInBadge from '../../components/MadeInBadge';
 import {
   Palette,
   Code2,
@@ -105,7 +106,10 @@ export default function AboutPage() {
             </ul>
           </div>
           {/* Фото с SVG-рамкой справа */}
-          <div className="flex-1 flex justify-center items-center relative min-w-[220px] max-w-[320px]">
+          <div className="flex-1 flex flex-col justify-center items-center relative min-w-[220px] max-w-[320px]">
+            <div className="mb-3 self-center">
+              <MadeInBadge rotate={3} size="sm" />
+            </div>
             <div className="relative w-full h-full flex justify-center items-center">
               <img
                 src="/uploads/about-photo.jpg"

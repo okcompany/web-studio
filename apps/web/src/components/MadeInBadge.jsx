@@ -4,13 +4,19 @@ import { useLanguage } from "../context/LanguageContext";
 
 // Sticker-style "Made in Deutschland — with love" badge with a hand-drawn
 // heart. Used in the footer (and anywhere a little charm is welcome).
-export default function MadeInBadge({ className = "" }) {
+export default function MadeInBadge({ className = "", rotate = -2, size = "md" }) {
   const { t } = useLanguage();
+  const sizing =
+    size === "sm"
+      ? "px-3 py-1.5 text-xs"
+      : size === "lg"
+        ? "px-5 py-2.5 text-base"
+        : "px-4 py-2 text-sm";
   return (
     <div
-      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF6EC] border border-[#F0C5A9] shadow-sm font-kalam text-sm text-[#5A3E2B] ${className}`}
+      className={`inline-flex items-center gap-2 rounded-full bg-[#FFF6EC] border border-[#F0C5A9] shadow-sm font-kalam text-[#5A3E2B] ${sizing} ${className}`}
       style={{
-        transform: "rotate(-2deg)",
+        transform: `rotate(${rotate}deg)`,
         boxShadow: "0 3px 0 -1px #F0C5A9, 0 6px 10px -6px rgba(0,0,0,0.1)",
       }}
     >
