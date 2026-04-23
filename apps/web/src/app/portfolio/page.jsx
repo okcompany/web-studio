@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import FloatingShapes from "../../components/FloatingShapes";
 import { ExternalLink, ImageIcon, X, Calendar, Tag } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -47,7 +48,8 @@ export default function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FEFEFE]">
+    <div className="min-h-screen bg-[#FEFEFE] relative">
+      <FloatingShapes />
       <Header />
 
       {/* Заголовок страницы */}

@@ -2,6 +2,9 @@
   "installCommand": "npm install --legacy-peer-deps",
   "functions": {
     "api/contact.js": { "runtime": "@vercel/node@5.7.13" },
-    "api/admin/login.js": { "runtime": "@vercel/node@5.7.13" }
+    "api/admin/login.js": { "runtime": "@vercel/node@5.7.13" },
+    "api/news.js": { "runtime": "@vercel/node@5.7.13" },
+    "api/portfolio.js": { "runtime": "@vercel/node@5.7.13" },
+    "api/upload.js": { "runtime": "@vercel/node@5.7.13" }
   }
 }

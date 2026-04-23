@@ -26,3 +26,8 @@ export function unauthorizedResponse() {
     { status: 401, headers: { "Content-Type": "application/json" } },
   );
 }
+
+// For Vercel Node.js serverless handlers (req, res).
+export function sendUnauthorized(res) {
+  res.status(401).json({ error: "Unauthorized" });
+}

@@ -2,6 +2,7 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Reveal from '../../components/Reveal';
+import FloatingShapes from '../../components/FloatingShapes';
 import { Palette, Code2, Sparkles, Wrench } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -13,7 +14,8 @@ export default function AboutPage() {
   const palette = ['#A8D5BA', '#F0C5A9', '#D4C5F9', '#BEE3DB'];
 
   return (
-    <div className="min-h-screen bg-[#FEFEFE]">
+    <div className="min-h-screen bg-[#FEFEFE] relative">
+      <FloatingShapes />
       <Header />
 
       {/* Заголовок страницы */}
@@ -91,7 +93,15 @@ export default function AboutPage() {
           {/* Фото с SVG-рамкой справа */}
           <div className="flex-1 flex justify-center items-center relative min-w-[220px] max-w-[320px]">
             <div className="relative w-full h-full flex justify-center items-center">
-              <img src="/uploads/about-photo.jpg" alt="about" className="w-56 h-56 object-cover rounded-xl z-10" />
+              <img
+                src="/uploads/about-photo.jpg"
+                alt="about"
+                className="w-56 h-56 object-cover rounded-xl z-10"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "/about-placeholder.svg";
+                }}
+              />
               {/* SVG-рамка: волнистая линия */}
               <svg className="absolute top-0 left-0 w-56 h-56 pointer-events-none z-0" viewBox="0 0 224 224">
                 <path

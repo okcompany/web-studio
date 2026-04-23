@@ -9,6 +9,7 @@ import FloatingShapes from "../components/FloatingShapes";
 import HighlightedSlogan from "../components/HighlightedSlogan";
 import PaperPlaneAnimation from "../components/PaperPlaneAnimation";
 import BusAnimation from "../components/BusAnimation";
+import HandDrawnSlideshow from "../components/HandDrawnSlideshow";
 import {
   ArrowRight,
   Send,
@@ -179,46 +180,23 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Визуальный элемент */}
+            {/* Визуальный элемент — слайдшоу фото в рисованной рамке */}
             <div
               className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              {/* Основной контейнер иллюстрации */}
-              <div className="relative aspect-square max-w-lg mx-auto">
-                {/* Цветная рисованная рамка */}
-                <svg
-                  className="absolute inset-0 w-full h-full"
-                  viewBox="0 0 400 400"
-                >
-                  <rect
-                    x="20"
-                    y="20"
-                    width="360"
-                    height="360"
-                    stroke="url(#frameGradient)"
-                    strokeWidth="3"
-                    fill="none"
-                    transform="rotate(2 200 200)"
-                    className="hand-drawn-animation"
-                    style={{ animationDelay: "0.8s" }}
-                  />
-                  <defs>
-                    <linearGradient
-                      id="frameGradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#D4C5F9" />
-                      <stop offset="50%" stopColor="#A8D5BA" />
-                      <stop offset="100%" stopColor="#F0C5A9" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+              <HandDrawnSlideshow />
+            </div>
+          </div>
+        </div>
+      </section>
 
-                {/* Центральные элементы дизайна */}
-                <div className="absolute inset-8 flex items-center justify-center">
+      {/* Старые декоративные эскизы — оставим спрятанными, чтобы не ломать grid, но не рендерим */}
+      <div style={{ display: "none" }}>
+        <div className="relative aspect-square max-w-lg mx-auto">
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 400">
+            <rect x="20" y="20" width="360" height="360" stroke="#000" strokeWidth="3" fill="none" />
+          </svg>
+          <div className="absolute inset-8 flex items-center justify-center">
                   <div className="relative">
                     {/* Эскиз ноутбука/компьютера */}
                     <svg
@@ -338,18 +316,8 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Рисованная подпись */}
-              <div className="absolute -bottom-8 -right-4 opacity-50">
-                <span className="font-caveat text-sm text-[#A8D5BA] transform rotate-12 inline-block">
-                  OK Design ✓
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
+      </div>
 
       {/* Анимация самолетика (telegram hint) */}
       <div className="hidden md:flex justify-center -mt-8 mb-8 pointer-events-none">

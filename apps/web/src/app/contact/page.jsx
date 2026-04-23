@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PaperPlaneAnimation from "../../components/PaperPlaneAnimation";
+import FloatingShapes from "../../components/FloatingShapes";
 import { Send, Mail, MessageCircle, User, FileText } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -67,7 +68,8 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FEFEFE]">
+    <div className="min-h-screen bg-[#FEFEFE] relative">
+      <FloatingShapes />
       <Header />
 
       {/* Заголовок страницы */}
