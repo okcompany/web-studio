@@ -1,0 +1,14 @@
+{
+  "folder_name": "devin-test-news",
+  "title": {
+    "en": "Devin CMS Test",
+    "ru": "Тест CMS",
+    "de": "Test"
+  },
+  "content": {
+    "en": "Hello from Devin",
+    "ru": "Привет из Devin",
+    "de": "Hallo"
+  },
+  "date": "2026-04-23T00:00:00Z"
+}
