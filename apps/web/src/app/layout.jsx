@@ -35,35 +35,76 @@ export default function RootLayout({ children }) {
         .font-kalam { font-family: 'Kalam', cursive; }
         .font-caveat { font-family: 'Caveat', cursive; }
 
-        /* Анимации рисования с цветными контурами */
+        /* Hand-drawn stroke animation — uses an absolute dash length that is
+           larger than any path/rect perimeter used in this project (~1500).
+           Together with the browser's built-in stroke-dashoffset interpolation
+           this produces a smooth "drawing" effect for every shape. */
         @keyframes draw {
-          from { stroke-dashoffset: 100%; }
-          to { stroke-dashoffset: 0%; }
-        }
-
-        @keyframes colorful-appear {
-          from {
-            opacity: 0;
-            transform: scale(0.98);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1.04);
-          }
+          from { stroke-dashoffset: 3000; }
+          to { stroke-dashoffset: 0; }
         }
 
         .hand-drawn-animation {
-          stroke-dasharray: 100%;
-          animation: draw 0.8s ease-out forwards;
+          stroke-dasharray: 3000;
+          stroke-dashoffset: 3000;
+          animation: draw 1.4s ease-out forwards;
         }
 
+        /* Scope animation start to viewport: parent needs a .not-in-view / .in-view
+           class. Elements without a scoping wrapper fall back to the default
+           on-mount behavior defined above. */
+        .not-in-view .hand-drawn-animation {
+          animation: none;
+          stroke-dashoffset: 3000;
+        }
+        .in-view .hand-drawn-animation {
+          animation: draw 1.4s ease-out forwards;
+        }
+
+        /* Soft fade-up for content blocks */
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { opacity: 0; }
+        .fade-up.in-view { animation: fadeUp 0.8s ease-out forwards; }
+
+        /* Floating SVG decorations */
+        @keyframes float-y {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(4deg); }
+        }
+        .float-slow { animation: float-y 6s ease-in-out infinite; transform-origin: center; }
+        .float-med { animation: float-y 4.5s ease-in-out infinite; transform-origin: center; }
+
+        @keyframes slow-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .spin-slow { animation: slow-spin 30s linear infinite; transform-origin: center; }
+
+        /* Watercolor hover — single, consistent scale with a soft colour overlay */
         .watercolor-hover {
-          transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), filter 0.4s ease;
+          will-change: transform;
         }
 
         .watercolor-hover:hover {
-          animation: colorful-appear 0.6s ease-out;
-          transform: scale(1.06);
+          transform: scale(1.04);
+          filter: saturate(1.05);
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+          .hand-drawn-animation,
+          .fade-up.in-view,
+          .float-slow,
+          .float-med,
+          .spin-slow {
+            animation: none !important;
+          }
+          .hand-drawn-animation { stroke-dashoffset: 0; }
+          .fade-up { opacity: 1; }
         }
 
         /* Цветной скроллбар */

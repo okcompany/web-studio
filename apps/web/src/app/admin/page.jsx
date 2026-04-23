@@ -8,17 +8,89 @@ const TABS = [
   { key: "portfolio", label: "Портфолио" }
 ];
 
+function AdminLogin({ onAuthenticated }) {
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Login failed");
+      }
+      onAuthenticated();
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="max-w-md mx-auto mt-20 bg-white rounded-xl shadow p-8">
+        <h1 className="text-2xl font-bold mb-6 text-center">Вход в админ-панель</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <label className="block">
+            <span className="text-sm text-gray-700">Пароль</span>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoFocus
+              className="mt-1 w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+              required
+            />
+          </label>
+          {error && <div className="text-red-600 text-sm">{error}</div>}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-60"
+          >
+            {submitting ? "Вход..." : "Войти"}
+          </button>
+        </form>
+        <p className="mt-6 text-xs text-gray-500 text-center">
+          Установите переменную окружения <code>ADMIN_PASSWORD</code>, чтобы задать свой пароль.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
+  const [authState, setAuthState] = useState("checking"); // checking | authenticated | login
   const [activeTab, setActiveTab] = useState("news");
   const [items, setItems] = useState([]);
   const [editing, setEditing] = useState(null);
   const [showEditor, setShowEditor] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Check session cookie on mount
   useEffect(() => {
-    fetchAll();
+    fetch("/api/admin/login")
+      .then((res) => res.json())
+      .then((data) => setAuthState(data.authenticated ? "authenticated" : "login"))
+      .catch(() => setAuthState("login"));
+  }, []);
+
+  useEffect(() => {
+    if (authState === "authenticated") {
+      fetchAll();
+    }
     // eslint-disable-next-line
-  }, [activeTab]);
+  }, [activeTab, authState]);
 
   async function fetchAll() {
     setLoading(true);
@@ -53,11 +125,15 @@ export default function AdminPage() {
   async function handleDelete(folder_name) {
     let endpoint = activeTab === "news" ? "/api/news" : "/api/portfolio";
     try {
-      await fetch(endpoint, {
+      const response = await fetch(endpoint, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ folder_name })
       });
+      if (response.status === 401) {
+        setAuthState("login");
+        return;
+      }
     } catch (error) {
       console.log("API delete failed, using localStorage fallback");
       // Fallback to localStorage
@@ -82,6 +158,10 @@ export default function AdminPage() {
         },
         body: JSON.stringify(obj)
       });
+      if (response.status === 401) {
+        setAuthState("login");
+        return;
+      }
       if (response.ok) {
         fetchAll();
         return;
@@ -96,13 +176,11 @@ export default function AdminPage() {
       let items = localData ? JSON.parse(localData) : [];
 
       if (editing) {
-        // Update existing item
         const index = items.findIndex(item => item.folder_name === editing.folder_name);
         if (index !== -1) {
           items[index] = obj;
         }
       } else {
-        // Add new item
         items.push(obj);
       }
 
@@ -111,7 +189,6 @@ export default function AdminPage() {
     } catch (error) {
       if (error.name === 'QuotaExceededError') {
         console.log('localStorage is full, clearing all data');
-        // Clear all localStorage
         localStorage.clear();
         try {
           localStorage.setItem(`admin_${activeTab}`, JSON.stringify([obj]));
@@ -123,10 +200,40 @@ export default function AdminPage() {
     }
   }
 
+  async function handleLogout() {
+    try {
+      await fetch("/api/admin/login", { method: "DELETE" });
+    } catch (_) {
+      /* noop */
+    }
+    setAuthState("login");
+  }
+
+  if (authState === "checking") {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="text-center mt-20 text-gray-500">Проверка доступа...</div>
+      </div>
+    );
+  }
+
+  if (authState === "login") {
+    return <AdminLogin onAuthenticated={() => setAuthState("authenticated")} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="container mx-auto py-10 px-2">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-gray-500 hover:text-gray-700 underline"
+          >
+            Выйти
+          </button>
+        </div>
         <div className="flex gap-6 mb-8 justify-center">
           {TABS.map(t => (
             <button key={t.key}

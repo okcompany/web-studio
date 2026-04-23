@@ -1,4 +1,5 @@
 import { getPortfolioItems, addPortfolioItem, updatePortfolioItem, deletePortfolioItem } from '../../../utils/fileStorage.js';
+import { isAdminRequest, unauthorizedResponse } from '../../../utils/adminAuth.js';
 
 export async function GET() {
   try {
@@ -11,6 +12,7 @@ export async function GET() {
 }
 
 export async function POST(req) {
+  if (!isAdminRequest(req)) return unauthorizedResponse();
   try {
     const item = await req.json();
     if (!item.folder_name) {
@@ -25,6 +27,7 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
+  if (!isAdminRequest(req)) return unauthorizedResponse();
   try {
     const item = await req.json();
     if (!item.folder_name) {
@@ -39,6 +42,7 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
+  if (!isAdminRequest(req)) return unauthorizedResponse();
   try {
     const { folder_name } = await req.json();
     if (!folder_name) {

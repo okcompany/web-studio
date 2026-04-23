@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Send, Mail, MessageCircle, User, FileText } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -12,13 +13,14 @@ export default function ContactPage() {
     email: "",
     subject: "",
     message: "",
+    website: "", // honeypot — real users never touch this
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { t } = useLanguage();
 
   const contactMutation = useMutation({
     mutationFn: async (data) => {
-      const response = await fetch("/api/contact/telegram", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +29,12 @@ export default function ContactPage() {
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        let error = {};
+        try {
+          error = await response.json();
+        } catch (_) {
+          // ignore
+        }
         throw new Error(error.error || "Failed to send message");
       }
 
@@ -35,9 +42,16 @@ export default function ContactPage() {
     },
     onSuccess: () => {
       setIsSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "", website: "" });
     },
   });
+
+  // Auto reset the success state after 6 seconds so user can send another message.
+  useEffect(() => {
+    if (!isSubmitted) return;
+    const timer = setTimeout(() => setIsSubmitted(false), 6000);
+    return () => clearTimeout(timer);
+  }, [isSubmitted]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -174,9 +188,12 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <p className="font-kalam text-lg text-[#2A2A2A]">
-                          oleh@webstudio.de
-                        </p>
+                        <a
+                          href="mailto:kalchenko2022@gmail.com"
+                          className="font-kalam text-lg text-[#2A2A2A] hover:text-[#5A5A5A] transition-colors"
+                        >
+                          kalchenko2022@gmail.com
+                        </a>
                       </div>
                     </div>
 
@@ -202,9 +219,14 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <div>
-                        <p className="font-kalam text-lg text-[#2A2A2A]">
-                          @oleh_kalchenko
-                        </p>
+                        <a
+                          href="https://t.me/OKwebDesign_bot"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-kalam text-lg text-[#2A2A2A] hover:text-[#5A5A5A] transition-colors"
+                        >
+                          @OKwebDesign_bot
+                        </a>
                       </div>
                     </div>
 
@@ -323,6 +345,30 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="relative space-y-6">
+                  {/* Honeypot — hidden field to trap bots. Real users never see/fill it. */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      left: "-10000px",
+                      top: "auto",
+                      width: "1px",
+                      height: "1px",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <label>
+                      Website
+                      <input
+                        type="text"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formData.website}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </div>
                   {/* Цветная рисованная граница формы */}
                   <svg
                     className="absolute inset-0 w-full h-full pointer-events-none"
@@ -593,7 +639,7 @@ export default function ContactPage() {
                         </svg>
                         <p className="relative font-kalam text-base text-red-600">
                           {contactMutation.error?.message ||
-                            "Fehler beim Senden der Nachricht"}
+                            t("contact.form.errorGeneric")}
                         </p>
                       </div>
                     )}
@@ -604,6 +650,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

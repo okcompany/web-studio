@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { ExternalLink, ImageIcon, X, Calendar, Tag } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -295,6 +296,8 @@ export default function PortfolioPage() {
           )}
         </div>
       </section>
+
+      <Footer />
 
       {/* Модальное окно проекта */}
       {isModalOpen && selectedProject && (

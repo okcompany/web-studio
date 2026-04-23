@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
-import { ArrowRight, Send } from "lucide-react";
+import Footer from "../components/Footer";
+import Reveal from "../components/Reveal";
+import {
+  ArrowRight,
+  Send,
+  Palette,
+  Code2,
+  Sparkles,
+  Wrench,
+} from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function HomePage() {
@@ -14,7 +23,7 @@ export default function HomePage() {
   }, []);
 
   const handleTelegramContact = () => {
-    window.open("https://t.me/oleh_kalchenko", "_blank");
+    window.open("https://t.me/OKwebDesign_bot", "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -283,7 +292,7 @@ export default function HomePage() {
                     </svg>
 
                     {/* Плавающие элементы дизайна */}
-                    <div className="absolute -top-4 -left-4">
+                    <div className="absolute -top-4 -left-4 float-slow">
                       <svg width="40" height="40" viewBox="0 0 40 40">
                         <circle
                           cx="20"
@@ -298,7 +307,7 @@ export default function HomePage() {
                       </svg>
                     </div>
 
-                    <div className="absolute -top-8 -right-8">
+                    <div className="absolute -top-8 -right-8 float-med">
                       <svg width="30" height="30" viewBox="0 0 30 30">
                         <rect
                           x="5"
@@ -315,7 +324,7 @@ export default function HomePage() {
                       </svg>
                     </div>
 
-                    <div className="absolute -bottom-6 -right-6">
+                    <div className="absolute -bottom-6 -right-6 float-slow">
                       <svg width="35" height="35" viewBox="0 0 35 35">
                         <polygon
                           points="17.5,5 25,25 10,20"
@@ -369,6 +378,127 @@ export default function HomePage() {
           </span>
         </div>
       </div>
+
+      {/* Услуги */}
+      <ServicesSection />
+
+      {/* Процесс работы */}
+      <ProcessSection />
+
+      {/* CTA */}
+      <CTASection />
+
+      <Footer />
     </div>
+  );
+}
+
+function ServicesSection() {
+  const { t } = useLanguage();
+  const items = t("services.items");
+  const icons = [Palette, Code2, Sparkles, Wrench];
+  const palette = ["#A8D5BA", "#F0C5A9", "#D4C5F9", "#BEE3DB"];
+
+  return (
+    <section className="py-16 px-6 md:px-12 bg-[#FCFAF7]/60">
+      <div className="max-w-6xl mx-auto">
+        <Reveal className="text-center mb-12">
+          <h2 className="font-caveat text-4xl md:text-5xl font-bold text-[#2A2A2A]">
+            {t("services.title")}
+          </h2>
+          <p className="font-kalam text-lg text-[#5A5A5A] mt-3">
+            {t("services.subtitle")}
+          </p>
+        </Reveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {(Array.isArray(items) ? items : []).map((service, idx) => {
+            const Icon = icons[idx % icons.length];
+            const color = palette[idx % palette.length];
+            return (
+              <Reveal
+                key={idx}
+                delay={idx * 120}
+                className="relative bg-white/70 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow watercolor-hover"
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ backgroundColor: `${color}33`, color }}
+                >
+                  <Icon size={24} />
+                </div>
+                <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-2">
+                  {service.title}
+                </h3>
+                <p className="font-kalam text-[#5A5A5A] leading-relaxed">
+                  {service.description}
+                </p>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProcessSection() {
+  const { t } = useLanguage();
+  const steps = t("process.steps");
+  return (
+    <section className="py-16 px-6 md:px-12">
+      <div className="max-w-5xl mx-auto">
+        <Reveal className="text-center mb-12">
+          <h2 className="font-caveat text-4xl md:text-5xl font-bold text-[#2A2A2A]">
+            {t("process.title")}
+          </h2>
+          <p className="font-kalam text-lg text-[#5A5A5A] mt-3">
+            {t("process.subtitle")}
+          </p>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {(Array.isArray(steps) ? steps : []).map((step, idx) => (
+            <Reveal
+              key={idx}
+              delay={idx * 120}
+              className="relative p-6 rounded-2xl border border-[#EADFD0] bg-white/60"
+            >
+              <div className="font-caveat text-5xl text-[#A8D5BA] leading-none mb-2">
+                0{idx + 1}
+              </div>
+              <h3 className="font-caveat text-2xl text-[#2A2A2A] mb-1">
+                {step.title}
+              </h3>
+              <p className="font-kalam text-[#5A5A5A]">{step.description}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTASection() {
+  const { t } = useLanguage();
+  return (
+    <section className="py-16 px-6 md:px-12">
+      <Reveal className="max-w-4xl mx-auto text-center bg-gradient-to-r from-[#E8F4F8] via-[#F0E8D6] to-[#F5E6F8] rounded-3xl p-10 md:p-14">
+        <h2 className="font-caveat text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-4">
+          {t("cta.title")}
+        </h2>
+        <p className="font-kalam text-lg text-[#5A5A5A] mb-8 max-w-xl mx-auto">
+          {t("cta.description")}
+        </p>
+        <a
+          href="/contact"
+          className="inline-flex items-center gap-2 bg-[#2A2A2A] text-white font-kalam text-lg px-8 py-3 rounded-full hover:bg-[#444] transition-colors watercolor-hover"
+        >
+          <Send size={18} />
+          {t("cta.button")}
+          <ArrowRight size={18} />
+        </a>
+      </Reveal>
+    </section>
   );
 }

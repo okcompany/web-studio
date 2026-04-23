@@ -1,9 +1,17 @@
 
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import Reveal from '../../components/Reveal';
+import { Palette, Code2, Sparkles, Wrench } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function AboutPage() {
   const { t } = useLanguage();
+  const services = t('services.items');
+  const steps = t('process.steps');
+  const icons = [Palette, Code2, Sparkles, Wrench];
+  const palette = ['#A8D5BA', '#F0C5A9', '#D4C5F9', '#BEE3DB'];
+
   return (
     <div className="min-h-screen bg-[#FEFEFE]">
       <Header />
@@ -48,7 +56,7 @@ export default function AboutPage() {
         </div>
 
         {/* Декоративные элементы */}
-        <div className="absolute top-10 left-2 sm:top-20 sm:left-10 opacity-20">
+        <div className="absolute top-10 left-2 sm:top-20 sm:left-10 opacity-20 float-slow">
           <svg width="60" height="60" className="sm:w-80 sm:h-80" viewBox="0 0 80 80">
             <rect
               x="10"
@@ -67,7 +75,7 @@ export default function AboutPage() {
 
       {/* Основной контент: слева текст, справа фото с рамкой */}
       <section className="py-8 px-4 sm:py-12 sm:px-8 md:py-12 md:px-12">
-        <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-8 flex flex-col md:flex-row gap-8 items-center">
+        <Reveal className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-8 flex flex-col md:flex-row gap-8 items-center">
           {/* Текстовый блок слева */}
           <div className="flex-1 text-left">
             <h2 className="font-kalam text-xl sm:text-2xl text-[#2A2A2A] mb-4">{t('about.title')}</h2>
@@ -92,7 +100,6 @@ export default function AboutPage() {
                   strokeWidth="4"
                   fill="none"
                   className="hand-drawn-animation"
-                  style={{ animation: 'draw 2s linear forwards' }}
                 />
                 <path
                   d="M24,44 Q50,24 80,44 Q110,64 140,44 Q170,24 200,44 Q218,64 218,110 Q218,156 200,180 Q170,200 140,180 Q110,160 80,180 Q50,200 24,180 Q16,156 24,110 Q16,64 24,44 Z"
@@ -100,13 +107,94 @@ export default function AboutPage() {
                   strokeWidth="2"
                   fill="none"
                   className="hand-drawn-animation"
-                  style={{ animation: 'draw 2.5s linear forwards' }}
+                  style={{ animationDelay: '0.4s' }}
                 />
               </svg>
             </div>
           </div>
+        </Reveal>
+      </section>
+
+      {/* Услуги */}
+      <section className="py-12 px-4 sm:px-8 md:px-12 bg-[#FCFAF7]/60">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="text-center mb-10">
+            <h2 className="font-caveat text-3xl md:text-4xl font-bold text-[#2A2A2A]">
+              {t('services.title')}
+            </h2>
+            <p className="font-kalam text-[#5A5A5A] mt-2">{t('services.subtitle')}</p>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(Array.isArray(services) ? services : []).map((s, idx) => {
+              const Icon = icons[idx % icons.length];
+              const color = palette[idx % palette.length];
+              return (
+                <Reveal
+                  key={idx}
+                  delay={idx * 120}
+                  className="bg-white/70 rounded-2xl p-5 shadow-sm watercolor-hover"
+                >
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
+                    style={{ backgroundColor: `${color}33`, color }}
+                  >
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="font-caveat text-xl text-[#2A2A2A] mb-1">{s.title}</h3>
+                  <p className="font-kalam text-sm text-[#5A5A5A]">{s.description}</p>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
+
+      {/* Процесс */}
+      <section className="py-12 px-4 sm:px-8 md:px-12">
+        <div className="max-w-5xl mx-auto">
+          <Reveal className="text-center mb-10">
+            <h2 className="font-caveat text-3xl md:text-4xl font-bold text-[#2A2A2A]">
+              {t('process.title')}
+            </h2>
+            <p className="font-kalam text-[#5A5A5A] mt-2">{t('process.subtitle')}</p>
+          </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {(Array.isArray(steps) ? steps : []).map((s, idx) => (
+              <Reveal
+                key={idx}
+                delay={idx * 120}
+                className="p-5 rounded-2xl border border-[#EADFD0] bg-white/60"
+              >
+                <div className="font-caveat text-4xl text-[#A8D5BA] leading-none mb-1">
+                  0{idx + 1}
+                </div>
+                <h3 className="font-caveat text-xl text-[#2A2A2A] mb-1">{s.title}</h3>
+                <p className="font-kalam text-sm text-[#5A5A5A]">{s.description}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-12 px-4 sm:px-8 md:px-12">
+        <Reveal className="max-w-4xl mx-auto text-center bg-gradient-to-r from-[#E8F4F8] via-[#F0E8D6] to-[#F5E6F8] rounded-3xl p-8 md:p-12">
+          <h2 className="font-caveat text-3xl md:text-4xl font-bold text-[#2A2A2A] mb-3">
+            {t('cta.title')}
+          </h2>
+          <p className="font-kalam text-[#5A5A5A] mb-6 max-w-xl mx-auto">
+            {t('cta.description')}
+          </p>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-[#2A2A2A] text-white font-kalam px-6 py-3 rounded-full hover:bg-[#444] transition-colors watercolor-hover"
+          >
+            {t('cta.button')}
+          </a>
+        </Reveal>
+      </section>
+
+      <Footer />
     </div>
   );
 }

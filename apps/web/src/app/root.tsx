@@ -34,7 +34,38 @@ import { useSandboxStore } from '../__create/hmr-sandbox-store';
 import type { Route } from './+types/root';
 import { useDevServerHeartbeat } from '../__create/useDevServerHeartbeat';
 
-export const links = () => [];
+export const links = () => [
+  { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  {
+    rel: 'preconnect',
+    href: 'https://fonts.gstatic.com',
+    crossOrigin: 'anonymous',
+  },
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&display=swap',
+  },
+];
+
+const SITE_URL = 'https://web-studio-oleg-kalchenko.vercel.app';
+const SITE_NAME = 'Oleh Kalchenko Web Studio';
+const SITE_DESCRIPTION =
+  'Creative web studio by Oleh Kalchenko — web design, development and branding. Turning ideas into unique digital experiences.';
+
+export const meta = () => [
+  { title: `${SITE_NAME} — Web design & development` },
+  { name: 'description', content: SITE_DESCRIPTION },
+  { name: 'theme-color', content: '#A8D5BA' },
+  { property: 'og:type', content: 'website' },
+  { property: 'og:title', content: SITE_NAME },
+  { property: 'og:description', content: SITE_DESCRIPTION },
+  { property: 'og:url', content: SITE_URL },
+  { property: 'og:site_name', content: SITE_NAME },
+  { name: 'twitter:card', content: 'summary_large_image' },
+  { name: 'twitter:title', content: SITE_NAME },
+  { name: 'twitter:description', content: SITE_DESCRIPTION },
+];
 
 if (globalThis.window && globalThis.window !== undefined) {
   globalThis.window.fetch = fetch;
@@ -374,7 +405,6 @@ export function Layout({ children }: { children: ReactNode }) {
         <Meta />
         <Links />
         <script type="module" src="/src/__create/dev-error-overlay.js"></script>
-        <link rel="icon" href="/src/__create/favicon.png" />
         <LoadFonts />
       </head>
       <body>

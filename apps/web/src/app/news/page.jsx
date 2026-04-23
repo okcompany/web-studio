@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -291,6 +292,8 @@ export default function NewsPage() {
           )}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }
