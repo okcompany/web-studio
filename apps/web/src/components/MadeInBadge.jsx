@@ -14,7 +14,7 @@ export default function MadeInBadge({ className = "", rotate = -2, size = "md" }
         : "px-4 py-2 text-sm";
   return (
     <div
-      className={`inline-flex items-center gap-2 rounded-full bg-[#FFF6EC] border border-[#F0C5A9] shadow-sm font-kalam text-[#5A3E2B] ${sizing} ${className}`}
+      className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#FFF6EC] border border-[#F0C5A9] shadow-sm font-kalam text-[#5A3E2B] ${sizing} ${className}`}
       style={{
         transform: `rotate(${rotate}deg)`,
         boxShadow: "0 3px 0 -1px #F0C5A9, 0 6px 10px -6px rgba(0,0,0,0.1)",

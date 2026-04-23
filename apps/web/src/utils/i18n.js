@@ -149,7 +149,7 @@ export const translations = {
     },
     news: {
       title: "Neuigkeiten & Updates",
-      description: "Hier finden Sie aktuelle Nachrichten, Events und Projekte aus meiner Web- und Designarbeit.",
+      description: "Aktuelle Nachrichten, Events und neue Projekte aus meiner Arbeit in Webentwicklung, Design und dem Einsatz von Künstlicher Intelligenz.",
       empty: "Bald erscheint hier Neues. Schauen Sie später wieder vorbei!",
     },
     about: {
@@ -445,7 +445,7 @@ export const translations = {
     },
     news: {
       title: "Новости и обновления",
-      description: "Здесь публикуются свежие новости, события и новые проекты из мира веб-разработки и дизайна.",
+      description: "Здесь публикуются свежие новости, события и новые проекты из мира веб-разработки, дизайна и искусственного интеллекта.",
       empty: "Скоро здесь появятся новости. Загляните позже!",
     },
 
@@ -697,7 +697,7 @@ export const translations = {
     },
     news: {
       title: "News & Updates",
-      description: "Find the latest news, events, and new projects from my web development and design journey.",
+      description: "The latest news, events and new projects from my web development, design and AI work.",
       empty: "New stories will appear here soon. Check back later!",
     },
 
