@@ -1,5 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "../context/LanguageContext";
+import ScrollProgress from "../components/ScrollProgress";
+import HeartBurst from "../components/HeartBurst";
+import StickyNote from "../components/StickyNote";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +30,12 @@ export default function RootLayout({ children }) {
       {/* Main content */}
       <div className="relative z-10">
         <QueryClientProvider client={queryClient}>
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            <ScrollProgress />
+            <HeartBurst />
+            <StickyNote />
+            {children}
+          </LanguageProvider>
         </QueryClientProvider>
       </div>
 
@@ -116,6 +124,53 @@ export default function RootLayout({ children }) {
                       0 8px 14px -8px rgba(0, 0, 0, 0.12);
         }
 
+        /* Heart-burst particles (HeartBurst.jsx) */
+        @keyframes heart-burst-rise {
+          0% { transform: translate(0, 0) scale(0.6); opacity: 0.9; }
+          40% { transform: translate(calc(var(--dx) * 0.5), calc(var(--dy) * 0.5)) scale(1); opacity: 1; }
+          100% { transform: translate(var(--dx), var(--dy)) scale(0.7); opacity: 0; }
+        }
+        .heart-burst-particle {
+          animation: heart-burst-rise 1s ease-out forwards;
+          transform-origin: center;
+        }
+
+        /* Hover tooltip (Tooltip.jsx) */
+        .tooltip-wrap { position: relative; display: inline-flex; }
+        .tooltip-bubble {
+          position: absolute;
+          bottom: calc(100% + 8px);
+          left: 50%;
+          transform: translateX(-50%) rotate(-3deg) scale(0.9);
+          background: #FFF9E6;
+          border: 1.5px solid #F0C5A9;
+          color: #5A3E2B;
+          padding: 4px 10px;
+          border-radius: 10px;
+          font-family: 'Caveat', cursive;
+          font-size: 16px;
+          white-space: nowrap;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 160ms ease, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: 0 3px 0 -1px #F0C5A9, 0 6px 10px -6px rgba(0,0,0,0.1);
+          z-index: 40;
+        }
+        .tooltip-wrap:hover .tooltip-bubble,
+        .tooltip-wrap:focus-within .tooltip-bubble {
+          opacity: 1;
+          transform: translateX(-50%) rotate(-3deg) scale(1);
+        }
+        .tooltip-bubble::after {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 6px solid transparent;
+          border-top-color: #FFF9E6;
+        }
+
         /* Respect reduced motion */
         @media (prefers-reduced-motion: reduce) {
           .hand-drawn-animation,
@@ -124,7 +179,8 @@ export default function RootLayout({ children }) {
           .float-med,
           .spin-slow,
           .animate-heartbeat,
-          .animate-wiggle {
+          .animate-wiggle,
+          .heart-burst-particle {
             animation: none !important;
           }
           .hand-drawn-animation { stroke-dashoffset: 0; }

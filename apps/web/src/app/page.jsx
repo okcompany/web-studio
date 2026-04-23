@@ -138,7 +138,8 @@ export default function HomePage() {
               <div className="relative pt-4">
                 <Link
                   to="/contact"
-                  className="relative group watercolor-hover inline-block"
+                  data-heart-burst
+                  className="relative group watercolor-hover inline-block heart-burst"
                 >
                   {/* Цветная рисованная граница кнопки */}
                   <svg

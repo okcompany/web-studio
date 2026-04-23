@@ -548,8 +548,9 @@ export default function ContactPage() {
                     <div className="pt-4">
                       <button
                         type="submit"
+                        data-heart-burst
                         disabled={contactMutation.isPending}
-                        className="relative group watercolor-hover w-full md:w-auto"
+                        className="relative group watercolor-hover w-full md:w-auto heart-burst"
                       >
                         {/* Цветная рисованная граница кнопки */}
                         <svg

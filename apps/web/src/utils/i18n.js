@@ -131,6 +131,7 @@ export const translations = {
       contact: "Kontakt",
       madeIn: "Made in Deutschland — mit Liebe gemacht",
       craftedBy: "Design & Code von OK",
+      tooltip: "Sag Hallo!",
     },
     badges: {
       available: "Verfügbar für Projekte",
@@ -382,6 +383,7 @@ export const translations = {
       contact: "Контакты",
       madeIn: "Сделано в Deutschland — с любовью",
       craftedBy: "Дизайн и код от OK",
+      tooltip: "Напишите мне!",
     },
     badges: {
       available: "Открыт для проектов",
@@ -633,6 +635,7 @@ export const translations = {
       contact: "Contact",
       madeIn: "Made in Deutschland — crafted with love",
       craftedBy: "Design & code by OK",
+      tooltip: "Say hi!",
     },
     badges: {
       available: "Available for projects",

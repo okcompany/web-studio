@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { MessageCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import MadeInBadge from "./MadeInBadge";
+import Tooltip from "./Tooltip";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -63,12 +64,15 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 mt-1 px-3 py-1.5 rounded-full bg-[#F0C5A9] text-[#2A2A2A] text-sm font-kalam hover:bg-[#E8B894] transition-colors sticker-shadow"
-              >
-                {t("cta.button")}
-              </Link>
+              <Tooltip text={t("footer.tooltip") || "Say hi!"}>
+                <Link
+                  to="/contact"
+                  data-heart-burst
+                  className="inline-flex items-center gap-2 mt-1 px-3 py-1.5 rounded-full bg-[#F0C5A9] text-[#2A2A2A] text-sm font-kalam hover:bg-[#E8B894] transition-colors sticker-shadow heart-burst"
+                >
+                  {t("cta.button")}
+                </Link>
+              </Tooltip>
             </li>
           </ul>
         </div>
