@@ -15,6 +15,22 @@ import { restartEnvFileChange } from './plugins/restartEnvFileChange';
 export default defineConfig({
   build: {
     target: 'es2022',
+    sourcemap: false,
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Harmless: rollup can't map back to source when the layout wrapper
+        // plugin inlines "use client" directives into transformed modules.
+        if (
+          warning.code === 'SOURCEMAP_ERROR' ||
+          /Error when using sourcemap for reporting an error/i.test(
+            warning.message || ''
+          )
+        ) {
+          return;
+        }
+        warn(warning);
+      },
+    },
   },
   // Keep them available via import.meta.env.NEXT_PUBLIC_*
   envPrefix: 'NEXT_PUBLIC_',

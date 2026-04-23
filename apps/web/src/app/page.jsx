@@ -192,9 +192,12 @@ export default function HomePage() {
             <div
               className={`relative transition-all duration-1000 delay-300 order-1 lg:order-2 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
-              <HandDrawnSlideshow />
-              <div className="mt-6 flex justify-center">
-                <MadeInBadge rotate={-4} />
+              <div className="relative">
+                <HandDrawnSlideshow />
+                {/* Бейдж "Made in Deutschland" накладкой на верхний край слайдшоу */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <MadeInBadge rotate={-4} />
+                </div>
               </div>
             </div>
           </div>

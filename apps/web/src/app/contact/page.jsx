@@ -110,7 +110,11 @@ export default function ContactPage() {
             </svg>
           </div>
 
-          <p className="font-kalam text-lg md:text-xl text-[#5A5A5A] mt-8 max-w-2xl mx-auto">
+          <div className="mt-6 flex justify-center">
+            <MadeInBadge rotate={-7} size="sm" />
+          </div>
+
+          <p className="font-kalam text-lg md:text-xl text-[#5A5A5A] mt-6 max-w-2xl mx-auto">
             {t("contact.subtitle")}
           </p>
 
@@ -224,9 +228,6 @@ export default function ContactPage() {
 
             {/* Контактная форма */}
             <div className="lg:col-span-2">
-              <div className="mb-4 flex justify-end">
-                <MadeInBadge rotate={-7} size="sm" />
-              </div>
               {isSubmitted ? (
                 <div className="relative text-center py-16">
                   {/* Сообщение об успехе с цветной рисованной рамкой */}

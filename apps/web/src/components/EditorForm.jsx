@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import WysiwygEditor from "./WysiwygEditor";
 import { useUpload } from "../utils/useUpload";
 
@@ -57,7 +57,7 @@ export default function EditorForm({ initialData, onSave, type }) {
     // Автоматическая генерация id для новой публикации
     let newFolderName = folderName;
     if (!folderName) {
-      const ts = new Date().toISOString().replace(/[-:TZ.]/g,"").slice(0,14);
+      const ts = new Date().toISOString().replace(/[^0-9]/g, "").slice(0, 14);
       newFolderName = `${type}_${ts}`;
     }
     const obj = {
