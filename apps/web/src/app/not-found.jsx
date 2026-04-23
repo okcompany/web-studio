@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FloatingShapes from "../components/FloatingShapes";
-import { useLanguage } from "../context/LanguageContext";
+import { LanguageProvider, useLanguage } from "../context/LanguageContext";
 
 const COPY = {
   de: {
@@ -28,6 +28,14 @@ const COPY = {
 };
 
 export default function NotFoundPage() {
+  return (
+    <LanguageProvider>
+      <NotFoundContent />
+    </LanguageProvider>
+  );
+}
+
+function NotFoundContent() {
   const { currentLanguage } = useLanguage();
   const lang = ["de", "en", "ru"].includes(currentLanguage)
     ? currentLanguage
