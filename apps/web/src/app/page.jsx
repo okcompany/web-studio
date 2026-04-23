@@ -11,6 +11,12 @@ import PaperPlaneAnimation from "../components/PaperPlaneAnimation";
 import BusAnimation from "../components/BusAnimation";
 import HandDrawnSlideshow from "../components/HandDrawnSlideshow";
 import {
+  WhyMeSection,
+  TechStackSection,
+  TestimonialsSection,
+  FaqSection,
+} from "../components/HomeSections";
+import {
   ArrowRight,
   Send,
   Palette,
@@ -352,11 +358,23 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Почему со мной */}
+      <WhyMeSection />
+
       {/* Услуги */}
       <ServicesSection />
 
       {/* Процесс работы */}
       <ProcessSection />
+
+      {/* Tech stack */}
+      <TechStackSection />
+
+      {/* Отзывы клиентов */}
+      <TestimonialsSection />
+
+      {/* FAQ */}
+      <FaqSection />
 
       {/* CTA */}
       <CTASection />

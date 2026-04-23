@@ -21,6 +21,71 @@ export const translations = {
         "Verwandeln Sie Ihre Ideen in einzigartige digitale Erlebnisse. Von Webdesign bis Branding – ich bringe Kreativität und Technik zusammen.",
       telegramButton: "Telegram Kontakt",
       scrollHint: "scrollen",
+      whyMe: {
+        title: "Warum mit mir arbeiten?",
+        subtitle: "Drei Dinge, die ich anders mache",
+        items: [
+          {
+            title: "Schnell & transparent",
+            description: "Antwort in 24 Std. Sie wissen immer, woran ich gerade arbeite und was als Nächstes kommt.",
+          },
+          {
+            title: "Persönlicher Ansatz",
+            description: "Kein Ticket-System, keine Junior-Teams. Sie sprechen direkt mit dem Designer und Entwickler.",
+          },
+          {
+            title: "Ehrliche Preise",
+            description: "Festpreis pro Projekt oder klarer Stundensatz. Keine versteckten Kosten am Ende.",
+          },
+        ],
+      },
+      techStack: {
+        title: "Mein Werkzeugkasten",
+        subtitle: "Moderne Technologien ohne Overkill",
+      },
+      testimonials: {
+        title: "Was Kunden sagen",
+        subtitle: "Ein paar Worte aus letzten Projekten",
+        items: [
+          {
+            quote: "Oleh hat unsere alte Website in zwei Wochen komplett neu aufgebaut. Klar, schnell, ohne Drama.",
+            author: "Anna M.",
+            role: "Gründerin, Hamburg",
+          },
+          {
+            quote: "Endlich jemand, der zuhört und nicht nur Buzzwords verkauft. Das Ergebnis spricht für sich.",
+            author: "Dmitri K.",
+            role: "E-Commerce, Berlin",
+          },
+          {
+            quote: "Wir kamen mit einer Skizze auf Papier und bekamen eine Website, die unser Business wirklich abbildet.",
+            author: "Lisa S.",
+            role: "Studio, München",
+          },
+        ],
+      },
+      faq: {
+        title: "Häufige Fragen",
+        subtitle: "Kurz und ehrlich",
+        items: [
+          {
+            q: "Wie lange dauert ein Projekt?",
+            a: "Eine Landing-Page 1–2 Wochen, ein kleiner Online-Shop 3–4 Wochen. Für Größeres legen wir einen Fahrplan zusammen fest.",
+          },
+          {
+            q: "Was kostet eine Website?",
+            a: "Der Preis hängt vom Umfang und den Zielen ab. Ich bespreche jedes Projekt persönlich und stimme dann ein individuelles Angebot ab — kostenlos und unverbindlich.",
+          },
+          {
+            q: "Arbeiten Sie mit Kunden außerhalb Deutschlands?",
+            a: "Ja, gerne. Die Kommunikation läuft in Deutsch, Englisch oder Russisch, die Rechnungen in EUR.",
+          },
+          {
+            q: "Wer pflegt die Website nach dem Launch?",
+            a: "Sie können alles selbst über das Admin-Panel ändern, oder ich übernehme die Pflege für einen kleinen monatlichen Betrag.",
+          },
+        ],
+      },
     },
     services: {
       title: "Leistungen",
@@ -64,10 +129,27 @@ export const translations = {
       rights: "Alle Rechte vorbehalten.",
       quickLinks: "Navigation",
       contact: "Kontakt",
+      madeIn: "Made in Deutschland — mit Liebe gemacht",
+      craftedBy: "Design & Code von OK",
+    },
+    badges: {
+      available: "Verfügbar für Projekte",
+      newBadge: "Neu",
+      topBadge: "Beliebt",
+      handmade: "Handgemacht",
+    },
+    legal: {
+      impressumTitle: "Impressum",
+      datenschutzTitle: "Datenschutz",
+      impressumLink: "Impressum",
+      datenschutzLink: "Datenschutz",
+      portfolioNote: "Diese Website ist ein persönliches Portfolio. Angebote erfolgen ausschließlich auf individuelle Anfrage — kein verbindliches kommerzielles Angebot.",
+      lastUpdated: "Zuletzt aktualisiert",
     },
     news: {
       title: "Neuigkeiten & Updates",
       description: "Hier finden Sie aktuelle Nachrichten, Events und Projekte aus meiner Web- und Designarbeit.",
+      empty: "Bald erscheint hier Neues. Schauen Sie später wieder vorbei!",
     },
     about: {
       title: "Über mich",
@@ -79,6 +161,39 @@ export const translations = {
         "Ich liebe kreative und ungewöhnliche Projekte",
         "Kunden weltweit",
       ],
+      story: {
+        title: "Meine Geschichte",
+        paragraphs: [
+          "Alles begann mit einem alten ThinkPad und der Neugier, wie Websites eigentlich funktionieren. Aus der Neugier wurde ein Beruf — und aus dem Beruf eine echte Leidenschaft für alles zwischen Design und Code.",
+          "Heute lebe ich in Deutschland und arbeite mit Kunden aus Europa und darüber hinaus. Mein Fokus: Projekte, die nicht nur gut aussehen, sondern auch wirklich gut funktionieren — schnell, klar, menschlich.",
+          "Ich glaube an kleine Iterationen, offene Kommunikation und viel Kaffee. Kein Buzzword-Bingo, keine unnötige Komplexität — nur ein klarer Plan und saubere Umsetzung.",
+        ],
+      },
+      values: {
+        title: "Meine Werte",
+        subtitle: "Wofür ich stehe",
+        items: [
+          { title: "Ehrlichkeit", description: "Klare Preise, keine versteckten Überraschungen." },
+          { title: "Geschwindigkeit", description: "Antwort in 24 Std., erste Ergebnisse in wenigen Tagen." },
+          { title: "Qualität", description: "Sauberer Code, moderne Standards, gute Performance." },
+          { title: "Menschlichkeit", description: "Ihr Projekt bekommt meine volle Aufmerksamkeit." },
+        ],
+      },
+      funFacts: {
+        title: "Kleine Fakten",
+        items: [
+          "☕ Mehr als 3 Kaffees pro Tag",
+          "🇩🇪 Wohnt in Deutschland",
+          "💼 8+ Jahre Erfahrung",
+          "🌍 Kunden in 12+ Ländern",
+          "🎨 Liebt Aquarell & Skizzen",
+          "🚴 Radelt zur Inspiration",
+        ],
+      },
+      stack: {
+        title: "Mein Tech-Stack",
+        subtitle: "Werkzeuge, mit denen ich täglich arbeite",
+      },
     },
 
     portfolio: {
@@ -119,6 +234,26 @@ export const translations = {
         description:
           "Vielen Dank für Ihre Nachricht. Ich melde mich so schnell wie möglich bei Ihnen.",
       },
+      info: {
+        title: "So erreichen Sie mich",
+        responseLabel: "Antwort",
+        responseValue: "in der Regel innerhalb von 24 Stunden",
+        timezoneLabel: "Zeitzone",
+        timezoneValue: "Berlin (MEZ / UTC+1)",
+        languagesLabel: "Sprachen",
+        languagesValue: "Deutsch · Englisch · Russisch",
+        locationLabel: "Standort",
+        locationValue: "Deutschland — arbeite weltweit remote",
+      },
+      faq: {
+        title: "Oft gefragt",
+        items: [
+          { q: "Wie schnell bekomme ich Antwort?", a: "In der Regel innerhalb von 24 Stunden, werktags meist am selben Tag." },
+          { q: "Muss ich vorher eine Aufgabenstellung schreiben?", a: "Nein, das erarbeiten wir im ersten Gespräch gemeinsam." },
+          { q: "Wie läuft die Abrechnung?", a: "Festpreis pro Projekt oder transparenter Stundensatz. 30 % bei Start, 70 % bei Abnahme." },
+          { q: "Kann ich Texte und Fotos später ändern?", a: "Ja — jede Seite kommt mit einem einfachen Admin-Panel, über das Sie alles selbst pflegen können." },
+        ],
+      },
     },
   },
 
@@ -137,6 +272,71 @@ export const translations = {
         "Превращаю ваши идеи в уникальные цифровые решения. От веб-дизайна до брендинга – объединяю креативность и технологии.",
       telegramButton: "Связаться в Telegram",
       scrollHint: "прокрутить",
+      whyMe: {
+        title: "Почему со мной?",
+        subtitle: "Три вещи, которые я делаю иначе",
+        items: [
+          {
+            title: "Быстро и прозрачно",
+            description: "Отвечаю в течение 24 часов. Вы всегда видите, над чем я работаю и что дальше.",
+          },
+          {
+            title: "Личный подход",
+            description: "Без тикет-систем и junior-команд. Вы общаетесь напрямую с дизайнером и разработчиком.",
+          },
+          {
+            title: "Честные цены",
+            description: "Фикс за проект или чёткая почасовая ставка. Никаких «внезапных» счетов в конце.",
+          },
+        ],
+      },
+      techStack: {
+        title: "Мой инструментарий",
+        subtitle: "Современные технологии без перегибов",
+      },
+      testimonials: {
+        title: "Что говорят клиенты",
+        subtitle: "Несколько слов из недавних проектов",
+        items: [
+          {
+            quote: "Олег переделал нам сайт за две недели. Чётко, быстро, без драмы.",
+            author: "Анна М.",
+            role: "Основатель, Гамбург",
+          },
+          {
+            quote: "Наконец человек, который слушает, а не продаёт баззворды. Результат говорит сам за себя.",
+            author: "Дмитрий К.",
+            role: "E-Commerce, Берлин",
+          },
+          {
+            quote: "Мы пришли с наброском на бумаге и получили сайт, который реально отражает наш бизнес.",
+            author: "Лиза С.",
+            role: "Студия, Мюнхен",
+          },
+        ],
+      },
+      faq: {
+        title: "Частые вопросы",
+        subtitle: "Коротко и честно",
+        items: [
+          {
+            q: "Сколько длится проект?",
+            a: "Лендинг — 1–2 недели, небольшой онлайн-магазин — 3–4 недели. Для более крупного сразу составляем план по этапам.",
+          },
+          {
+            q: "Сколько стоит сайт?",
+            a: "Цена зависит от задач и объёма. Я обсуждаю каждый проект лично и потом делаю индивидуальное предложение — бесплатно и без обязательств.",
+          },
+          {
+            q: "Работаете с клиентами не из Германии?",
+            a: "Да, с удовольствием. Общаюсь на немецком, английском и русском, оплата в EUR.",
+          },
+          {
+            q: "Кто будет поддерживать сайт после запуска?",
+            a: "Вы можете всё менять сами через админ-панель, либо я беру поддержку на небольшой ежемесячный абонемент.",
+          },
+        ],
+      },
     },
     services: {
       title: "Услуги",
@@ -180,6 +380,22 @@ export const translations = {
       rights: "Все права защищены.",
       quickLinks: "Навигация",
       contact: "Контакты",
+      madeIn: "Сделано в Deutschland — с любовью",
+      craftedBy: "Дизайн и код от OK",
+    },
+    badges: {
+      available: "Открыт для проектов",
+      newBadge: "Новое",
+      topBadge: "Популярное",
+      handmade: "Ручная работа",
+    },
+    legal: {
+      impressumTitle: "Impressum",
+      datenschutzTitle: "Политика конфиденциальности",
+      impressumLink: "Impressum",
+      datenschutzLink: "Конфиденциальность",
+      portfolioNote: "Этот сайт — личное портфолио. Любые предложения формируются индивидуально по запросу — публичной офертой это не является.",
+      lastUpdated: "Последнее обновление",
     },
     about: {
       title: "Обо мне",
@@ -191,10 +407,44 @@ export const translations = {
         "Люблю нестандартные задачи и творческие проекты",
         "Работаю с клиентами по всему миру",
       ],
+      story: {
+        title: "Моя история",
+        paragraphs: [
+          "Всё началось со старенького ThinkPad и любопытства «а как вообще работают сайты?». Любопытство переросло в профессию, а профессия — в настоящую страсть ко всему, что между дизайном и кодом.",
+          "Сейчас я живу в Германии и работаю с клиентами из Европы и не только. Фокус — на проектах, которые не просто красиво выглядят, а действительно хорошо работают: быстро, понятно, по-человечески.",
+          "Я верю в короткие итерации, открытую коммуникацию и много кофе. Никаких баззвордов и лишней сложности — только чёткий план и аккуратная реализация.",
+        ],
+      },
+      values: {
+        title: "Мои принципы",
+        subtitle: "За что я отвечаю",
+        items: [
+          { title: "Честность", description: "Понятные цены и никаких спрятанных сюрпризов." },
+          { title: "Скорость", description: "Ответ в течение 24 ч, первые результаты — за несколько дней." },
+          { title: "Качество", description: "Чистый код, современные стандарты, быстрая загрузка." },
+          { title: "Человечность", description: "Ваш проект получает всё моё внимание." },
+        ],
+      },
+      funFacts: {
+        title: "Немного обо мне",
+        items: [
+          "☕ 3+ кофе в день",
+          "🇩🇪 Живу в Германии",
+          "💼 8+ лет опыта",
+          "🌍 Клиенты в 12+ странах",
+          "🎨 Обожаю акварель и скетчи",
+          "🚴 Катаюсь на велике для вдохновения",
+        ],
+      },
+      stack: {
+        title: "Мой стек",
+        subtitle: "Инструменты, с которыми работаю каждый день",
+      },
     },
     news: {
       title: "Новости и обновления",
       description: "Здесь публикуются свежие новости, события и новые проекты из мира веб-разработки и дизайна.",
+      empty: "Скоро здесь появятся новости. Загляните позже!",
     },
 
     portfolio: {
@@ -235,6 +485,26 @@ export const translations = {
         description:
           "Спасибо за ваше сообщение. Я свяжусь с вами как можно скорее.",
       },
+      info: {
+        title: "Как со мной связаться",
+        responseLabel: "Отвечаю",
+        responseValue: "обычно в течение 24 часов",
+        timezoneLabel: "Часовой пояс",
+        timezoneValue: "Берлин (CET / UTC+1)",
+        languagesLabel: "Языки",
+        languagesValue: "Немецкий · Английский · Русский",
+        locationLabel: "Где я",
+        locationValue: "Германия — работаю удалённо по всему миру",
+      },
+      faq: {
+        title: "Часто спрашивают",
+        items: [
+          { q: "Как быстро вы отвечаете?", a: "Обычно в течение 24 часов, по будням — чаще всего в тот же день." },
+          { q: "Нужно ли заранее писать ТЗ?", a: "Нет, вместе составим его на первой встрече." },
+          { q: "Как устроена оплата?", a: "Фикс за проект или прозрачная почасовая ставка. 30 % на старте, 70 % после приёмки." },
+          { q: "Смогу потом менять тексты и фото сам?", a: "Да — каждый сайт идёт с простой админкой, в которой вы всё правите сами." },
+        ],
+      },
     },
   },
 
@@ -253,6 +523,71 @@ export const translations = {
         "Transform your ideas into unique digital experiences. From web design to branding – I bring creativity and technology together.",
       telegramButton: "Contact on Telegram",
       scrollHint: "scroll",
+      whyMe: {
+        title: "Why work with me?",
+        subtitle: "Three things I do differently",
+        items: [
+          {
+            title: "Fast & transparent",
+            description: "Reply within 24 hours. You always know what I'm working on and what comes next.",
+          },
+          {
+            title: "Personal approach",
+            description: "No ticket systems, no junior teams. You talk directly to the designer and developer.",
+          },
+          {
+            title: "Honest pricing",
+            description: "Fixed price per project or a clear hourly rate. No surprise invoices at the end.",
+          },
+        ],
+      },
+      techStack: {
+        title: "My toolkit",
+        subtitle: "Modern tech without the overkill",
+      },
+      testimonials: {
+        title: "What clients say",
+        subtitle: "A few words from recent projects",
+        items: [
+          {
+            quote: "Oleh rebuilt our old website in two weeks. Clear, fast, no drama.",
+            author: "Anna M.",
+            role: "Founder, Hamburg",
+          },
+          {
+            quote: "Finally someone who listens instead of selling buzzwords. The result speaks for itself.",
+            author: "Dmitri K.",
+            role: "E-commerce, Berlin",
+          },
+          {
+            quote: "We came in with a paper sketch and walked out with a site that actually represents our business.",
+            author: "Lisa S.",
+            role: "Studio, Munich",
+          },
+        ],
+      },
+      faq: {
+        title: "Frequent questions",
+        subtitle: "Short and honest",
+        items: [
+          {
+            q: "How long does a project take?",
+            a: "Landing pages take 1–2 weeks, a small online shop 3–4 weeks. For bigger projects we agree on a roadmap upfront.",
+          },
+          {
+            q: "What does a website cost?",
+            a: "Pricing depends on scope and goals. I discuss each project personally and then put together an individual quote — free of charge and without obligation.",
+          },
+          {
+            q: "Do you work with clients outside Germany?",
+            a: "Yes, gladly. We communicate in German, English or Russian, invoices are in EUR.",
+          },
+          {
+            q: "Who maintains the website after launch?",
+            a: "You can change everything yourself via the admin panel, or I take care of it for a small monthly retainer.",
+          },
+        ],
+      },
     },
     services: {
       title: "Services",
@@ -296,6 +631,22 @@ export const translations = {
       rights: "All rights reserved.",
       quickLinks: "Navigation",
       contact: "Contact",
+      madeIn: "Made in Deutschland — crafted with love",
+      craftedBy: "Design & code by OK",
+    },
+    badges: {
+      available: "Available for projects",
+      newBadge: "New",
+      topBadge: "Popular",
+      handmade: "Handmade",
+    },
+    legal: {
+      impressumTitle: "Legal Notice (Impressum)",
+      datenschutzTitle: "Privacy Policy",
+      impressumLink: "Legal Notice",
+      datenschutzLink: "Privacy",
+      portfolioNote: "This website is a personal portfolio. Any offers are made individually on request — this is not a binding commercial offer.",
+      lastUpdated: "Last updated",
     },
     about: {
       title: "About",
@@ -307,10 +658,44 @@ export const translations = {
         "I love creative and challenging projects",
         "Working with clients worldwide",
       ],
+      story: {
+        title: "My story",
+        paragraphs: [
+          "It all started with an old ThinkPad and the curiosity of how websites actually work. Curiosity became a profession — and the profession became a real passion for everything between design and code.",
+          "Today I live in Germany and work with clients across Europe and beyond. My focus is on projects that not only look good but really work well — fast, clear, human.",
+          "I believe in small iterations, open communication and lots of coffee. No buzzword bingo, no unnecessary complexity — just a clear plan and solid execution.",
+        ],
+      },
+      values: {
+        title: "My values",
+        subtitle: "What I stand for",
+        items: [
+          { title: "Honesty", description: "Clear prices, no hidden surprises." },
+          { title: "Speed", description: "Reply in 24 hours, first results in a few days." },
+          { title: "Quality", description: "Clean code, modern standards, great performance." },
+          { title: "Humanity", description: "Your project gets my full attention." },
+        ],
+      },
+      funFacts: {
+        title: "Little facts",
+        items: [
+          "☕ More than 3 coffees a day",
+          "🇩🇪 Based in Germany",
+          "💼 8+ years of experience",
+          "🌍 Clients in 12+ countries",
+          "🎨 Loves watercolour & sketching",
+          "🚴 Cycles for inspiration",
+        ],
+      },
+      stack: {
+        title: "My tech stack",
+        subtitle: "Tools I use every day",
+      },
     },
     news: {
       title: "News & Updates",
       description: "Find the latest news, events, and new projects from my web development and design journey.",
+      empty: "New stories will appear here soon. Check back later!",
     },
 
     portfolio: {
@@ -350,6 +735,26 @@ export const translations = {
         title: "Message sent!",
         description:
           "Thank you for your message. I will get back to you as soon as possible.",
+      },
+      info: {
+        title: "How to reach me",
+        responseLabel: "Response",
+        responseValue: "usually within 24 hours",
+        timezoneLabel: "Timezone",
+        timezoneValue: "Berlin (CET / UTC+1)",
+        languagesLabel: "Languages",
+        languagesValue: "German · English · Russian",
+        locationLabel: "Location",
+        locationValue: "Germany — working remotely worldwide",
+      },
+      faq: {
+        title: "Frequently asked",
+        items: [
+          { q: "How quickly do you reply?", a: "Usually within 24 hours, on weekdays often the same day." },
+          { q: "Do I need to write a brief upfront?", a: "No — we'll put it together in our first conversation." },
+          { q: "How does billing work?", a: "Fixed price per project or a clear hourly rate. 30 % upfront, 70 % on approval." },
+          { q: "Can I edit texts and photos later?", a: "Yes — every site comes with a simple admin panel so you can manage everything yourself." },
+        ],
       },
     },
   },

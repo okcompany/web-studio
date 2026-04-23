@@ -94,13 +94,37 @@ export default function RootLayout({ children }) {
           filter: saturate(1.05);
         }
 
+        /* Heart pulse for the Made-in-Deutschland badge */
+        @keyframes heartbeat {
+          0%, 100% { transform: scale(1); }
+          20% { transform: scale(1.12); }
+          40% { transform: scale(1); }
+          60% { transform: scale(1.06); }
+        }
+        .animate-heartbeat { animation: heartbeat 2.6s ease-in-out infinite; transform-origin: 12px 12px; }
+
+        /* Gentle wiggle for stickers and charm elements */
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(-3deg); }
+          50% { transform: rotate(3deg); }
+        }
+        .animate-wiggle { animation: wiggle 4s ease-in-out infinite; transform-origin: center; }
+
+        /* Sticker-style shadow with colored rim */
+        .sticker-shadow {
+          box-shadow: 0 3px 0 -1px rgba(240, 197, 169, 0.9),
+                      0 8px 14px -8px rgba(0, 0, 0, 0.12);
+        }
+
         /* Respect reduced motion */
         @media (prefers-reduced-motion: reduce) {
           .hand-drawn-animation,
           .fade-up.in-view,
           .float-slow,
           .float-med,
-          .spin-slow {
+          .spin-slow,
+          .animate-heartbeat,
+          .animate-wiggle {
             animation: none !important;
           }
           .hand-drawn-animation { stroke-dashoffset: 0; }

@@ -1,28 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const images = [
-    '/1.webp',
-    '/2.webp',
-    '/3.webp',
-    '/4.webp',
-    '/5.webp'
+// Default slides committed to the repo under public/slideshow/ — always
+// present on a fresh clone so the site renders immediately even without the
+// CMS configured.
+const DEFAULT_SLIDES = [
+    '/slideshow/slide-1.webp',
+    '/slideshow/slide-2.webp',
+    '/slideshow/slide-3.webp',
+    '/slideshow/slide-4.webp',
+    '/slideshow/slide-5.webp',
 ];
 
 export default function HandDrawnSlideshow() {
+    const [slides, setSlides] = useState(DEFAULT_SLIDES);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    // Load custom slides from the CMS; fall back silently to defaults on any
+    // error so the hero always renders.
     useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 7000); // Slower: Change image every 7 seconds
-
-        return () => clearInterval(timer);
+        let cancelled = false;
+        fetch('/api/slideshow')
+            .then((r) => (r.ok ? r.json() : null))
+            .then((data) => {
+                if (cancelled) return;
+                if (
+                    data &&
+                    Array.isArray(data.items) &&
+                    data.items.length > 0
+                ) {
+                    setSlides(data.items.map((it) => it.url));
+                    setCurrentIndex(0);
+                }
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
     }, []);
+
+    useEffect(() => {
+        if (slides.length <= 1) return;
+        const timer = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+        }, 7000);
+        return () => clearInterval(timer);
+    }, [slides.length]);
 
     return (
         <div className="relative aspect-square w-full max-w-lg mx-auto">
-            {/* Original Square Gradient Frame */}
             <svg
                 className="absolute inset-0 w-full h-full z-20 pointer-events-none"
                 viewBox="0 0 400 400"
@@ -54,20 +80,18 @@ export default function HandDrawnSlideshow() {
                 </defs>
             </svg>
 
-            {/* Image Container */}
-            {/* Adjusted padding to be inside the frame (20px offset + stroke) */}
-            {/* Added transform rotate-2 to match the frame rotation */}
-            <div className="absolute inset-12 z-10 overflow-hidden transform rotate-2">
+            <div className="absolute inset-6 sm:inset-10 md:inset-12 z-10 overflow-hidden transform rotate-2">
                 <AnimatePresence>
                     <motion.img
-                        key={currentIndex}
-                        src={images[currentIndex]}
+                        key={slides[currentIndex] + currentIndex}
+                        src={slides[currentIndex]}
                         alt={`Slide ${currentIndex + 1}`}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 2.5, ease: "easeInOut" }} // Smooth cross-fade
-                        className="absolute inset-0 w-full h-full object-contain" // Absolute positioning for overlap
+                        transition={{ duration: 2.5, ease: 'easeInOut' }}
+                        className="absolute inset-0 w-full h-full object-contain"
+                        loading="lazy"
                     />
                 </AnimatePresence>
             </div>

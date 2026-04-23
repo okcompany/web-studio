@@ -27,6 +27,11 @@ export const updatePortfolioItem = (...a) =>
 export const deletePortfolioItem = (...a) =>
   backend().deletePortfolioItem(...a);
 
+export const listSlideshow = (...a) => backend().listSlideshow(...a);
+export const addSlideshowImage = (...a) => backend().addSlideshowImage(...a);
+export const deleteSlideshowImage = (...a) =>
+  backend().deleteSlideshowImage(...a);
+
 export async function uploadAsset({ fileName, buffer }) {
   if (github.isGithubStorageAvailable()) {
     return github.uploadAsset({ fileName, buffer });

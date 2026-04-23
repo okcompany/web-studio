@@ -5,3 +5,8 @@
 /.react-router/
 /build/
 .vercel
+
+# Local secrets — NEVER commit
+.env
+.env.local
+.env.*.local

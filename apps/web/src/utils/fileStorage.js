@@ -125,3 +125,29 @@ export async function deleteItem(type, folderName) {
   const filePath = join(DIR, `${folderName}.json`);
   await fs.unlink(filePath).catch(() => {});
 }
+
+// Slideshow — list images in public/slideshow and optionally write/delete
+// them directly on disk (dev only; in production GitHub backend takes over).
+const SLIDESHOW_DIR = join(process.cwd(), 'public', 'slideshow');
+
+export async function listSlideshow() {
+  await ensureDirExists(SLIDESHOW_DIR);
+  const entries = await fs.readdir(SLIDESHOW_DIR);
+  return entries
+    .filter((name) => /\.(webp|jpg|jpeg|png)$/i.test(name))
+    .sort()
+    .map((name) => ({ name, url: `/slideshow/${name}` }));
+}
+
+export async function addSlideshowImage({ fileName, buffer }) {
+  await ensureDirExists(SLIDESHOW_DIR);
+  const safe = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  await fs.writeFile(join(SLIDESHOW_DIR, safe), buffer);
+  return { name: safe, url: `/slideshow/${safe}` };
+}
+
+export async function deleteSlideshowImage(name) {
+  const safe = name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  await fs.unlink(join(SLIDESHOW_DIR, safe)).catch(() => {});
+  return true;
+}

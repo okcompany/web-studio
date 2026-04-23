@@ -6,8 +6,10 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PaperPlaneAnimation from "../../components/PaperPlaneAnimation";
 import FloatingShapes from "../../components/FloatingShapes";
-import { Send, Mail, MessageCircle, User, FileText } from "lucide-react";
+import { Send, Mail, MessageCircle, User, FileText, Clock, Globe2, MapPin, Languages } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
+import Reveal from "../../components/Reveal";
+import { FaqSection } from "../../components/HomeSections";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -659,7 +661,60 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Info block */}
+      <ContactInfoSection />
+
+      {/* FAQ */}
+      <FaqSection
+        titleKey="contact.faq.title"
+        subtitleKey={null}
+        itemsKey="contact.faq.items"
+      />
+
       <Footer />
     </div>
+  );
+}
+
+function ContactInfoSection() {
+  const { t } = useLanguage();
+  const info = t("contact.info");
+  if (!info || typeof info !== "object") return null;
+  const rows = [
+    { Icon: Clock, label: info.responseLabel, value: info.responseValue, color: "#A8D5BA" },
+    { Icon: Globe2, label: info.timezoneLabel, value: info.timezoneValue, color: "#F0C5A9" },
+    { Icon: Languages, label: info.languagesLabel, value: info.languagesValue, color: "#D4C5F9" },
+    { Icon: MapPin, label: info.locationLabel, value: info.locationValue, color: "#BEE3DB" },
+  ];
+  return (
+    <section className="py-12 px-4 sm:px-8 md:px-12">
+      <div className="max-w-4xl mx-auto">
+        <Reveal className="text-center mb-8">
+          <h2 className="font-caveat text-3xl md:text-4xl font-bold text-[#2A2A2A]">
+            {info.title}
+          </h2>
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {rows.map(({ Icon, label, value, color }, idx) => (
+            <Reveal
+              key={idx}
+              delay={idx * 100}
+              className="bg-white/80 border border-[#EADFD0] rounded-2xl p-5 flex items-start gap-4 watercolor-hover"
+            >
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: `${color}33`, color }}
+              >
+                <Icon size={20} />
+              </div>
+              <div>
+                <div className="font-caveat text-lg text-[#2A2A2A]">{label}</div>
+                <div className="font-kalam text-[#5A5A5A]">{value}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
