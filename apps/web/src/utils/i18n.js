@@ -210,8 +210,8 @@ export const translations = {
         "Ein Ansprechpartner für Design, Entwicklung und KI-Integration",
         "Sauberer Code auf React, Next.js, Tailwind, Node.js — ohne Overkill",
         "Ich mag die kniffligen Projekte am liebsten — Rebranding, neue Produkte, ungewohnte Ideen",
-        "Remote für Kunden weltweit — deutsch, englisch, russisch, und in jeder weiteren Sprache mit KI-Unterstützung",
-        "Basis in Deutschland, Rechnung in EUR, sauber und transparent",
+        "Remote für Kunden weltweit — auf Deutsch, alle weiteren Sprachen mit KI-Unterstützung",
+        "Basis in Deutschland — alles transparent und deutsch-gründlich",
       ],
       story: {
         title: "Meine Geschichte",
@@ -508,8 +508,8 @@ export const translations = {
         "Один человек отвечает за дизайн, код и внедрение ИИ — без посредников",
         "Чистый код на React, Next.js, Tailwind, Node.js — без лишнего",
         "Люблю непричёсанные задачи: ребрендинги, новые продукты, непривычные идеи",
-        "Удалённо по всему миру — на немецком, английском, русском, остальные языки — через ИИ-переводчик",
-        "База в Германии, счета в EUR, всё прозрачно и по-немецки аккуратно",
+        "Удалённо по всему миру — на русском, остальные языки — через ИИ-переводчик",
+        "База в Германии — всё прозрачно и по-немецки аккуратно",
       ],
       story: {
         title: "Моя история",
@@ -811,8 +811,8 @@ export const translations = {
         "One person owns design, development and AI integration — no middlemen",
         "Clean React / Next.js / Tailwind / Node.js code — no overkill",
         "I actually enjoy the tricky projects — rebrands, new products, unusual ideas",
-        "Remote for clients worldwide — German, English, Russian, any other language via AI translation",
-        "Based in Germany, invoicing in EUR, clean and transparent",
+        "Remote for clients worldwide — in English, any other language via AI translation",
+        "Based in Germany — clean, transparent, German-precise",
       ],
       story: {
         title: "My story",

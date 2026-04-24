@@ -90,7 +90,7 @@ export default function HandDrawnSlideshow() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 2.5, ease: 'easeInOut' }}
-                        className="absolute inset-0 w-full h-full object-contain"
+                        className="absolute inset-0 w-full h-full object-contain scale-125"
                         loading="lazy"
                     />
                 </AnimatePresence>
