@@ -216,19 +216,23 @@ export async function uploadAsset({ fileName, buffer }) {
     message: `cms: upload ${safe}`,
     isBinary: true,
   });
-  return { url: `/uploads/${safe}`, path };
+  return { url: `/api/asset?kind=uploads&name=${encodeURIComponent(safe)}`, path };
 }
 
 // Slideshow images live under public/slideshow — listed / added / deleted as
 // raw files so a fresh clone still contains the defaults committed to git.
 const SLIDESHOW_DIR = "apps/web/public/slideshow";
 
+function slideshowUrl(name) {
+  return `/api/asset?kind=slideshow&name=${encodeURIComponent(name)}`;
+}
+
 export async function listSlideshow() {
   const entries = await listDir(SLIDESHOW_DIR);
   return entries
     .filter((e) => e.type === "file" && /\.(webp|jpg|jpeg|png)$/i.test(e.name))
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((e) => ({ name: e.name, url: `/slideshow/${e.name}` }));
+    .map((e) => ({ name: e.name, url: slideshowUrl(e.name) }));
 }
 
 export async function addSlideshowImage({ fileName, buffer }) {
@@ -240,7 +244,7 @@ export async function addSlideshowImage({ fileName, buffer }) {
     message: `cms: slideshow add ${safe}`,
     isBinary: true,
   });
-  return { name: safe, url: `/slideshow/${safe}` };
+  return { name: safe, url: slideshowUrl(safe) };
 }
 
 export async function deleteSlideshowImage(name) {

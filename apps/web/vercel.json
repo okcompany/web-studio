@@ -7,6 +7,7 @@
     "api/portfolio.js": { "runtime": "@vercel/node@5.7.13" },
     "api/upload.js": { "runtime": "@vercel/node@5.7.13" },
     "api/slideshow.js": { "runtime": "@vercel/node@5.7.13" },
+    "api/asset.js": { "runtime": "@vercel/node@5.7.13" },
     "api/legal.js": { "runtime": "@vercel/node@5.7.13" }
   }
 }

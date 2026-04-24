@@ -49,10 +49,7 @@ export default async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const items = await listSlideshow();
-      res.setHeader(
-        'Cache-Control',
-        'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
-      );
+      res.setHeader('Cache-Control', 'no-store');
       res.status(200).json({ items });
       return;
     }
