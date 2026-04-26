@@ -377,7 +377,7 @@ function DashboardPanel({ onGo }) {
         <ul className="list-disc list-inside space-y-1 text-[#5A5A5A]">
           <li>
             Каждое изменение в админке коммитится в репозиторий{" "}
-            <code className="bg-white px-1 rounded">Tor2024/WebStudioOK</code>
+            <code className="bg-white px-1 rounded">okcompany/web-studio</code>
           </li>
           <li>Vercel подхватывает commit и деплоит новую версию сайта</li>
           <li>
@@ -745,7 +745,7 @@ function SettingsPanel() {
             <code className="bg-white px-1 rounded">GITHUB_REPO_OWNER</code> /{" "}
             <code className="bg-white px-1 rounded">GITHUB_REPO_NAME</code> /{" "}
             <code className="bg-white px-1 rounded">GITHUB_REPO_BRANCH</code> —
-            адрес репозитория (по умолчанию Tor2024/WebStudioOK,{" "}
+            адрес репозитория (по умолчанию okcompany/web-studio,{" "}
             <em>devin/initial-import</em>)
           </li>
           <li>

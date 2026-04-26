@@ -1,7 +1,7 @@
 // GitHub-backed storage for CMS content.
 // Commits JSON + binary assets directly to the configured repo/branch via the
 // Contents API. Required env: GITHUB_TOKEN. Optional: GITHUB_REPO_OWNER
-// (default Tor2024), GITHUB_REPO_NAME (default WebStudioOK),
+// (default okcompany), GITHUB_REPO_NAME (default web-studio),
 // GITHUB_REPO_BRANCH (default devin/initial-import).
 //
 // Every write triggers a new commit → Vercel auto-redeploys the site.
@@ -9,8 +9,8 @@
 function env() {
   return {
     token: process.env.GITHUB_TOKEN,
-    owner: process.env.GITHUB_REPO_OWNER || "Tor2024",
-    repo: process.env.GITHUB_REPO_NAME || "WebStudioOK",
+    owner: process.env.GITHUB_REPO_OWNER || "okcompany",
+    repo: process.env.GITHUB_REPO_NAME || "web-studio",
     branch:
       process.env.GITHUB_REPO_BRANCH ||
       process.env.VERCEL_GIT_COMMIT_REF ||

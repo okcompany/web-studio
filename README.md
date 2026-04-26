@@ -3,7 +3,7 @@
 Personal portfolio site with a lightweight, GitHub-backed CMS.
 
 Live: **https://webstudiook.vercel.app**
-Source: https://github.com/Tor2024/WebStudioOK
+Source: https://github.com/okcompany/web-studio
 
 ---
 
@@ -53,7 +53,7 @@ npm run preview
 
 ## Deploying to Vercel
 
-1. Go to https://vercel.com/new → import the `Tor2024/WebStudioOK` repo.
+1. Go to https://vercel.com/new → import the `okcompany/web-studio` repo.
 2. Framework preset: **Other**.
 3. Root directory: `apps/web`.
 4. Install command: `npm install --legacy-peer-deps`.
