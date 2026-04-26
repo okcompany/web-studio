@@ -50,6 +50,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const items = await listSlideshow();
       res.setHeader('Cache-Control', 'no-store');
+      res.setHeader('X-Slideshow-Build', 'v2-asset-proxy');
       res.status(200).json({ items });
       return;
     }
