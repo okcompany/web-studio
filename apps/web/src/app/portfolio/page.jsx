@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -22,13 +24,16 @@ export default function PortfolioPage() {
         setLoading(false);
       })
       .catch(() => {
-        // Fallback to localStorage
-        const localData = localStorage.getItem('admin_portfolio');
-        if (localData) {
-          try {
-            const parsed = JSON.parse(localData);
-            setPortfolioItems(parsed);
-          } catch (e) {
+        if (typeof window !== 'undefined') {
+          const localData = localStorage.getItem('admin_portfolio');
+          if (localData) {
+            try {
+              const parsed = JSON.parse(localData);
+              setPortfolioItems(parsed);
+            } catch (e) {
+              setPortfolioItems([]);
+            }
+          } else {
             setPortfolioItems([]);
           }
         } else {

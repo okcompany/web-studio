@@ -41,11 +41,11 @@ export default function Footer() {
             {t("footer.quickLinks")}
           </div>
           <ul className="space-y-2 font-kalam text-[#5A5A5A]">
-            <li><a href="/" className="hover:text-[#2A2A2A] transition-colors">{t("nav.home")}</a></li>
-            <li><a href="/portfolio" className="hover:text-[#2A2A2A] transition-colors">{t("nav.portfolio")}</a></li>
-            <li><a href="/news" className="hover:text-[#2A2A2A] transition-colors">{t("nav.news")}</a></li>
-            <li><a href="/about" className="hover:text-[#2A2A2A] transition-colors">{t("nav.about")}</a></li>
-            <li><a href="/contact" className="hover:text-[#2A2A2A] transition-colors">{t("nav.contact")}</a></li>
+            <li><Link to="/" className="hover:text-[#2A2A2A] transition-colors">{t("nav.home")}</Link></li>
+            <li><Link to="/portfolio" className="hover:text-[#2A2A2A] transition-colors">{t("nav.portfolio")}</Link></li>
+            <li><Link to="/news" className="hover:text-[#2A2A2A] transition-colors">{t("nav.news")}</Link></li>
+            <li><Link to="/about" className="hover:text-[#2A2A2A] transition-colors">{t("nav.about")}</Link></li>
+            <li><Link to="/contact" className="hover:text-[#2A2A2A] transition-colors">{t("nav.contact")}</Link></li>
           </ul>
         </div>
 

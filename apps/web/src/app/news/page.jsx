@@ -1,3 +1,4 @@
+"use client";
 
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
@@ -21,13 +22,16 @@ export default function NewsPage() {
         setLoading(false);
       })
       .catch(() => {
-        // Fallback to localStorage
-        const localData = localStorage.getItem('admin_news');
-        if (localData) {
-          try {
-            const parsed = JSON.parse(localData);
-            setNewsItems(parsed);
-          } catch (e) {
+        if (typeof window !== 'undefined') {
+          const localData = localStorage.getItem('admin_news');
+          if (localData) {
+            try {
+              const parsed = JSON.parse(localData);
+              setNewsItems(parsed);
+            } catch (e) {
+              setNewsItems([]);
+            }
+          } else {
             setNewsItems([]);
           }
         } else {

@@ -84,7 +84,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex items-center justify-between relative">
         {/* Логотип */}
         <div className="flex items-center min-w-0">
-          <a href="/" className="relative group watercolor-hover max-w-full">
+          <Link to="/" className="relative group watercolor-hover max-w-full">
             <div className="font-caveat text-lg sm:text-2xl md:text-3xl font-bold text-[#2A2A2A] relative z-10 whitespace-nowrap leading-tight">
               <TypewriterText text="Web Studio Oleh Kalchenko" delay={4000} />
             </div>
@@ -103,7 +103,7 @@ export default function Header() {
             </svg>
             {/* Цветной фон при наведении */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#E8F4F8] to-[#F0E8D6] opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10 rounded-lg transform scale-110"></div>
-          </a>
+          </Link>
         </div>
 
         <div className="flex items-center space-x-3 sm:space-x-6 flex-shrink-0">
