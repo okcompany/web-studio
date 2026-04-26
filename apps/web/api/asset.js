@@ -18,9 +18,12 @@ const MIME = {
 function githubEnv() {
   return {
     token: process.env.GITHUB_TOKEN,
-    owner: process.env.GITHUB_REPO_OWNER || 'Tor2024',
-    repo: process.env.GITHUB_REPO_NAME || 'WebStudioOK',
-    branch: process.env.GITHUB_REPO_BRANCH || 'devin/initial-import',
+    owner: process.env.GITHUB_REPO_OWNER || 'okcompany',
+    repo: process.env.GITHUB_REPO_NAME || 'web-studio',
+    branch:
+      process.env.GITHUB_REPO_BRANCH ||
+      process.env.VERCEL_GIT_COMMIT_REF ||
+      'main',
   };
 }
 

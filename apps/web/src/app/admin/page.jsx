@@ -746,7 +746,7 @@ function SettingsPanel() {
             <code className="bg-white px-1 rounded">GITHUB_REPO_NAME</code> /{" "}
             <code className="bg-white px-1 rounded">GITHUB_REPO_BRANCH</code> —
             адрес репозитория (по умолчанию okcompany/web-studio,{" "}
-            <em>devin/initial-import</em>)
+            <em>main</em>)
           </li>
           <li>
             <code className="bg-white px-1 rounded">RESEND_API_KEY</code> /{" "}

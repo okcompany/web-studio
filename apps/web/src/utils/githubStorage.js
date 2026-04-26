@@ -2,7 +2,7 @@
 // Commits JSON + binary assets directly to the configured repo/branch via the
 // Contents API. Required env: GITHUB_TOKEN. Optional: GITHUB_REPO_OWNER
 // (default okcompany), GITHUB_REPO_NAME (default web-studio),
-// GITHUB_REPO_BRANCH (default devin/initial-import).
+// GITHUB_REPO_BRANCH (default main).
 //
 // Every write triggers a new commit → Vercel auto-redeploys the site.
 
@@ -14,7 +14,7 @@ function env() {
     branch:
       process.env.GITHUB_REPO_BRANCH ||
       process.env.VERCEL_GIT_COMMIT_REF ||
-      "devin/initial-import",
+      "main",
   };
 }
 

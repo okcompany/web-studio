@@ -70,7 +70,7 @@ npm run preview
 8. Deploy.
 
 Once the GitHub integration is connected, **every push to
-`devin/initial-import` (or whichever branch you configured) auto-deploys the
+`main` (or whichever branch you configured) auto-deploys the
 whole site** — including content commits made by the admin panel. Cloning the
 repo and pushing it elsewhere keeps everything self-contained: images and
 content live alongside the code.
