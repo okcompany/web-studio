@@ -5,6 +5,7 @@ import {
   deletePortfolioItem,
 } from '../src/utils/storage.js';
 import { isAdminRequest, sendUnauthorized } from '../src/utils/adminAuth.js';
+import { jsonBody } from './cmsApi.js';
 
 export default async function handler(req, res) {
   try {
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const item = req.body;
+      const item = jsonBody(req);
       if (!item || !item.folder_name) {
         res.status(400).json({ error: 'folder_name is required' });
         return;
@@ -35,7 +36,7 @@ export default async function handler(req, res) {
       return;
     }
     if (req.method === 'PUT') {
-      const item = req.body;
+      const item = jsonBody(req);
       if (!item || !item.folder_name) {
         res.status(400).json({ error: 'folder_name is required' });
         return;
@@ -45,7 +46,7 @@ export default async function handler(req, res) {
       return;
     }
     if (req.method === 'DELETE') {
-      const { folder_name } = req.body || {};
+      const { folder_name } = jsonBody(req);
       if (!folder_name) {
         res.status(400).json({ error: 'folder_name is required' });
         return;

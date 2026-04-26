@@ -7,6 +7,7 @@ import FloatingShapes from "../../components/FloatingShapes";
 import MadeInBadge from "../../components/MadeInBadge";
 import { ExternalLink, ImageIcon, X, Calendar, Tag } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
+import { renderCmsContent } from "../../utils/cmsContent";
 
 export default function PortfolioPage() {
   const [portfolioItems, setPortfolioItems] = useState([]);
@@ -282,9 +283,8 @@ export default function PortfolioPage() {
                           const content = typeof project.content === 'string'
                             ? project.content
                             : project.content?.[currentLanguage] || project.content?.ru || project.content?.en || '';
-                          // Remove img tags for preview
-                          const textOnly = content.replace(/<img[^>]*>/g, '');
-                          return <div dangerouslySetInnerHTML={{ __html: textOnly }} />;
+                          const textOnly = renderCmsContent(content, { stripImages: true });
+                          return <div className="cms-content" dangerouslySetInnerHTML={{ __html: textOnly }} />;
                         })()}
                       </div>
 
@@ -441,11 +441,13 @@ export default function PortfolioPage() {
                   </h3>
 
                   <div
-                    className="font-kalam text-lg lg:text-xl text-[#5A5A5A] leading-relaxed space-y-6"
+                    className="cms-content font-kalam text-lg lg:text-xl text-[#5A5A5A] leading-relaxed space-y-6"
                     dangerouslySetInnerHTML={{
-                      __html: typeof selectedProject.content === 'string'
-                        ? selectedProject.content
-                        : selectedProject.content?.[currentLanguage] || selectedProject.content?.ru || selectedProject.content?.en || ''
+                      __html: renderCmsContent(
+                        typeof selectedProject.content === 'string'
+                          ? selectedProject.content
+                          : selectedProject.content?.[currentLanguage] || selectedProject.content?.ru || selectedProject.content?.en || ''
+                      )
                     }}
                   />
                 </div>

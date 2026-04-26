@@ -1,17 +1,38 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import { useUpload } from "../utils/useUpload";
+import { countCmsImages } from "../utils/cmsContent";
 
-export default function WysiwygEditor({ value, onChange }) {
+const MAX_INLINE_IMAGES = 5;
+
+function safeFileName(name) {
+  return String(name || "image")
+    .replace(/[^\p{L}\p{N}._-]+/gu, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 80) || "image";
+}
+
+export default function WysiwygEditor({ value, onChange, maxImages = MAX_INLINE_IMAGES }) {
   const ref = useRef();
   const [upload] = useUpload();
   const lastValueRef = useRef();
+  const savedRangeRef = useRef(null);
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const saveSelection = useCallback(() => {
+    const editor = ref.current;
+    const selection = window.getSelection();
+    if (!editor || !selection.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    if (editor.contains(range.commonAncestorContainer)) {
+      savedRangeRef.current = range.cloneRange();
+    }
+  }, []);
 
   useEffect(() => {
     if (ref.current && value !== lastValueRef.current) {
       ref.current.innerHTML = value || "";
       lastValueRef.current = value;
-      // Move cursor to the end
       const range = document.createRange();
       range.selectNodeContents(ref.current);
       range.collapse(false);
@@ -21,7 +42,6 @@ export default function WysiwygEditor({ value, onChange }) {
     }
   }, [value]);
 
-  // Update uploadedImages from value
   useEffect(() => {
     if (!value) {
       setUploadedImages([]);
@@ -29,118 +49,114 @@ export default function WysiwygEditor({ value, onChange }) {
     }
     const div = document.createElement('div');
     div.innerHTML = value;
-    const imgs = div.querySelectorAll('img');
-    const images = Array.from(imgs).map(img => img.src).filter(src => src.startsWith('data:'));
+    const imgs = div.querySelectorAll('img, [data-cms-image]');
+    const images = Array.from(imgs)
+      .map((node) => ({
+        url: node.getAttribute("data-cms-image") || node.getAttribute("src") || "",
+        name: node.getAttribute("data-cms-filename") || node.getAttribute("alt") || "image",
+      }))
+      .filter((image) => image.url);
     setUploadedImages(images);
   }, [value]);
 
   const handleImageUpload = async () => {
+    setMessage("");
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
-    input.multiple = true; // Allow multiple files
+    input.multiple = true;
     input.onchange = async (e) => {
-      const files = Array.from(e.target.files);
+      const files = Array.from(e.target.files || []);
       if (files.length > 0) {
-        const newImages = [];
-
-        for (const file of files) {
-          const reader = new FileReader();
-          await new Promise((resolve) => {
-            reader.onload = (event) => {
-              newImages.push(event.target.result);
-              resolve();
-            };
-            reader.readAsDataURL(file);
-          });
+        const currentCount = countCmsImages(ref.current?.innerHTML || value);
+        const freeSlots = Math.max(0, maxImages - currentCount);
+        const selected = files.slice(0, freeSlots);
+        if (!selected.length) {
+          setMessage(`Можно вставить не более ${maxImages} изображений.`);
+          return;
+        }
+        if (files.length > freeSlots) {
+          setMessage(`Добавлено ${freeSlots} из ${files.length}: лимит ${maxImages} изображений.`);
         }
 
-        setUploadedImages(prev => [...prev, ...newImages]);
+        for (const file of selected) {
+          const result = await upload({ file });
+          if (result.error || !result.url) {
+            setMessage(result.error || "Не удалось загрузить изображение.");
+            continue;
+          }
+          insertImageAtCursor({ url: result.url, name: safeFileName(file.name), skipLimit: true });
+        }
       }
     };
     input.click();
   };
 
-  const deleteImage = useCallback((imageDataUrl) => {
-    // Remove from uploadedImages
-    setUploadedImages(prev => prev.filter(img => img !== imageDataUrl));
-    // Remove from HTML
+  const deleteImage = useCallback((imageUrl) => {
+    setUploadedImages(prev => prev.filter(img => img.url !== imageUrl));
     if (ref.current) {
-      const html = ref.current.innerHTML.replace(new RegExp(`<img[^>]*src="${imageDataUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*>`, 'g'), '');
+      const escaped = imageUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const html = ref.current.innerHTML
+        .replace(new RegExp(`<img[^>]*src=["']${escaped}["'][^>]*>`, "g"), "")
+        .replace(
+          new RegExp(`<span[^>]*data-cms-image=["']${escaped}["'][^>]*>.*?<\\/span>`, "g"),
+          "",
+        );
       ref.current.innerHTML = html;
       onChange(html);
     }
   }, [onChange]);
 
-  const insertImageAtCursor = useCallback((imageDataUrl) => {
+  const insertImageAtCursor = useCallback(({ url, name, skipLimit = false }) => {
     const editor = ref.current;
     if (!editor) return;
-
-    editor.focus();
-
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    range.deleteContents();
-
-    // Create image element
-    const img = document.createElement('img');
-    img.src = imageDataUrl;
-    img.alt = 'Uploaded Image';
-    img.style.width = '100%';
-    img.style.height = 'auto';
-
-    range.insertNode(img);
-
-    // Move cursor after inserted image
-    range.setStartAfter(img);
-    range.setEndAfter(img);
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-    // Trigger onChange
-    setTimeout(() => {
-      if (editor) {
-        onChange(editor.innerHTML);
-      }
-    }, 0);
-  }, [onChange]);
-
-  const insertHtmlAtCursor = useCallback((html) => {
-    const editor = ref.current;
-    if (!editor) return;
-
-    editor.focus();
-
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    range.deleteContents();
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
-    const fragment = document.createDocumentFragment();
-    while (tempDiv.firstChild) {
-      fragment.appendChild(tempDiv.firstChild);
+    const currentCount = countCmsImages(editor.innerHTML);
+    if (!skipLimit && currentCount >= maxImages) {
+      setMessage(`Можно вставить не более ${maxImages} изображений.`);
+      return;
     }
 
-    range.insertNode(fragment);
+    editor.focus();
 
-    // Move cursor after inserted content
-    range.setStartAfter(fragment.lastChild || fragment);
-    range.setEndAfter(fragment.lastChild || fragment);
+    const selection = window.getSelection();
+    let range = null;
+    if (selection.rangeCount && editor.contains(selection.getRangeAt(0).commonAncestorContainer)) {
+      range = selection.getRangeAt(0);
+    } else if (savedRangeRef.current) {
+      range = savedRangeRef.current.cloneRange();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    if (!range) return;
+
+    range.deleteContents();
+
+    const token = document.createElement("span");
+    token.textContent = `[${name}]`;
+    token.dataset.cmsImage = url;
+    token.dataset.cmsFilename = name;
+    token.contentEditable = "false";
+    token.className = "cms-image-token";
+
+    range.insertNode(token);
+
+    range.setStartAfter(token);
+    range.setEndAfter(token);
     selection.removeAllRanges();
     selection.addRange(range);
+    savedRangeRef.current = range.cloneRange();
 
-    // Trigger onChange with a small delay to ensure DOM is updated
     setTimeout(() => {
       if (editor) {
-        onChange(editor.innerHTML);
+        setUploadedImages((prev) =>
+          prev.some((image) => image.url === url) ? prev : [...prev, { url, name }],
+        );
+        const html = editor.innerHTML;
+        lastValueRef.current = html;
+        onChange(html);
       }
     }, 0);
-  }, [onChange]);
+  }, [maxImages, onChange]);
 
   return (
     <div>
@@ -151,25 +167,25 @@ export default function WysiwygEditor({ value, onChange }) {
       >
         Загрузить изображения
       </button>
+      {message && <div className="mb-2 text-sm text-red-600">{message}</div>}
 
-      {/* Image gallery */}
       {uploadedImages.length > 0 && (
         <div className="mb-4 p-3 bg-gray-50 rounded border">
-          <div className="text-sm text-gray-600 mb-2">Кликните на изображение, чтобы вставить в текст:</div>
+          <div className="text-sm text-gray-600 mb-2">Кликните на изображение, чтобы повторно вставить имя файла в текст:</div>
           <div className="flex flex-wrap gap-2">
-            {uploadedImages.map((imageDataUrl, index) => (
-              <div key={index} className="relative">
+            {uploadedImages.map((image, index) => (
+              <div key={`${image.url}-${index}`} className="relative">
                 <img
-                  src={imageDataUrl}
-                  alt={`Image ${index + 1}`}
+                  src={image.url}
+                  alt={image.name}
                   className="w-16 h-16 object-cover rounded border cursor-pointer hover:border-blue-500 hover:shadow-md transition-all"
-                  onClick={() => insertImageAtCursor(imageDataUrl)}
+                  onClick={() => insertImageAtCursor(image)}
                   title="Кликните, чтобы вставить в текст"
                 />
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 text-xs flex items-center justify-center hover:bg-red-600"
-                  onClick={() => deleteImage(imageDataUrl)}
+                  onClick={() => deleteImage(image.url)}
                   title="Удалить изображение"
                 >
                   ×
@@ -184,7 +200,15 @@ export default function WysiwygEditor({ value, onChange }) {
         ref={ref}
         contentEditable
         className="border rounded px-2 py-1 min-h-[120px] bg-white focus:outline-[#A8D5BA]"
-        onKeyUp={e => onChange(e.currentTarget.innerHTML)}
+        onInput={e => {
+          saveSelection();
+          onChange(e.currentTarget.innerHTML);
+        }}
+        onClick={saveSelection}
+        onKeyUp={e => {
+          saveSelection();
+          onChange(e.currentTarget.innerHTML);
+        }}
         suppressContentEditableWarning
         dir="ltr"
         lang="ru"

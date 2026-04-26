@@ -1,38 +1,34 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import WysiwygEditor from "./WysiwygEditor";
 import { useUpload } from "../utils/useUpload";
+import { countCmsImages } from "../utils/cmsContent";
 
 const LANGS = ["en", "ru", "de"];
 
 export default function EditorForm({ initialData, onSave, type }) {
   initialData = initialData || {};
   const [cover, setCover] = useState(initialData.cover || "");
-  const [coverFile, setCoverFile] = useState(null);
   const [title, setTitle] = useState(initialData.title || { en: "", ru: "", de: "" });
   const [content, setContent] = useState(initialData.content || { en: "", ru: "", de: "" });
   const [date, setDate] = useState(initialData.date || new Date().toISOString().substring(0, 10));
   const [lang, setLang] = useState("en");
   const [uploading, setUploading] = useState(false);
-  const [uploadResult, setUploadResult] = useState("");
   const [validationError, setValidationError] = useState("");
   const folderName = initialData.folder_name || null;
   const [upload] = useUpload();
-  const formRef = useRef();
 
-  // Helpers
-  const imgCount = (content[lang].match(/<img /g) || []).length;
+  const imgCount = countCmsImages(content[lang]);
 
   async function handleCoverChange(e) {
     const file = e.target.files[0];
-    setCoverFile(file);
     if (file) {
-      // Convert file to base64 data URL for local storage
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const dataUrl = event.target.result;
-        setCover(dataUrl);
-      };
-      reader.readAsDataURL(file);
+      const result = await upload({ file });
+      if (result.error || !result.url) {
+        setValidationError(result.error || "Не удалось загрузить обложку");
+        return;
+      }
+      setCover(result.url);
+      setValidationError("");
     }
   }
 
@@ -40,10 +36,9 @@ export default function EditorForm({ initialData, onSave, type }) {
     setContent(c => ({ ...c, [lang]: html }));
   };
 
-  // Submit handler
   async function handleSubmit(e) {
     e.preventDefault();
-    // Validation
+    setValidationError("");
     if (!title.en || !title.ru || !title.de) {
       setValidationError("Заполните все поля названий на трёх языках");
       return;
@@ -53,22 +48,25 @@ export default function EditorForm({ initialData, onSave, type }) {
       return;
     }
     setUploading(true);
-    let coverUrl = cover || initialData.cover || "";
-    // Автоматическая генерация id для новой публикации
-    let newFolderName = folderName;
-    if (!folderName) {
-      const ts = new Date().toISOString().replace(/[^0-9]/g, "").slice(0, 14);
-      newFolderName = `${type}_${ts}`;
+    try {
+      let newFolderName = folderName;
+      if (!folderName) {
+        const ts = new Date().toISOString().replace(/[^0-9]/g, "").slice(0, 14);
+        newFolderName = `${type}_${ts}`;
+      }
+      const obj = {
+        folder_name: newFolderName,
+        cover: cover || initialData.cover || "",
+        title,
+        content,
+        date
+      };
+      await onSave(obj);
+    } catch (error) {
+      setValidationError(error.message || "Ошибка сохранения");
+    } finally {
+      setUploading(false);
     }
-    const obj = {
-      folder_name: newFolderName,
-      cover: coverUrl,
-      title,
-      content,
-      date
-    };
-    await onSave(obj);
-    setUploading(false);
   }
 
   return (
@@ -94,10 +92,11 @@ export default function EditorForm({ initialData, onSave, type }) {
         <WysiwygEditor
           value={content[lang]}
           onChange={val => {
-            if (((val.match(/<img /g)||[]).length) <= 5) {
+            if (countCmsImages(val) <= 5) {
               handleWysiwygChange(val);
             }
           }}
+          maxImages={5}
         />
         <div className="text-gray-500 text-sm mt-1">Можно вставить не более 5 изображений в текст на каждом языке</div>
       </div>

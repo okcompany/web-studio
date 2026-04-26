@@ -1,8 +1,6 @@
-import { promises as fs } from 'node:fs';
-import { join } from 'node:path';
 import { isAdminRequest, unauthorizedResponse } from '../../../utils/adminAuth.js';
+import { uploadAsset } from '../../../utils/storage.js';
 
-const UPLOAD_DIR = join(process.cwd(), 'public', 'uploads');
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_EXT = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']);
 
@@ -28,12 +26,10 @@ export const POST = async (req) => {
 
     const fileName = `img_${Date.now()}_${Math.floor(Math.random()*10000)}.${ext}`;
     const arrayBuffer = await file.arrayBuffer();
-
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-    await fs.writeFile(join(UPLOAD_DIR, fileName), new Uint8Array(arrayBuffer));
+    const result = await uploadAsset({ fileName, buffer: Buffer.from(arrayBuffer) });
 
     return new Response(JSON.stringify({
-      url: `/uploads/${fileName}`
+      url: result.url
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     console.error('Upload error:', error);

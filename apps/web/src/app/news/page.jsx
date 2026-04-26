@@ -8,6 +8,7 @@ import FloatingShapes from "../../components/FloatingShapes";
 import MadeInBadge from "../../components/MadeInBadge";
 import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
+import { renderCmsContent } from "../../utils/cmsContent";
 
 export default function NewsPage() {
   const [newsItems, setNewsItems] = useState([]);
@@ -282,11 +283,13 @@ export default function NewsPage() {
 
                         {/* Содержимое */}
                         <div
-                          className="font-kalam text-base lg:text-lg text-[#5A5A5A] leading-relaxed"
+                          className="cms-content font-kalam text-base lg:text-lg text-[#5A5A5A] leading-relaxed"
                           dangerouslySetInnerHTML={{
-                            __html: typeof news.content === 'string'
-                              ? news.content
-                              : news.content?.[currentLanguage] || news.content?.ru || news.content?.en || ''
+                            __html: renderCmsContent(
+                              typeof news.content === 'string'
+                                ? news.content
+                                : news.content?.[currentLanguage] || news.content?.ru || news.content?.en || ''
+                            )
                           }}
                         />
 

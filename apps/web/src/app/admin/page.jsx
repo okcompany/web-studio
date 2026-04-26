@@ -399,6 +399,7 @@ function CmsPanel({ type }) {
   const [loading, setLoading] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const title = type === "news" ? "Новости" : "Портфолио";
   const endpoint = type === "news" ? "/api/news" : "/api/portfolio";
@@ -408,10 +409,12 @@ function CmsPanel({ type }) {
     setLoading(true);
     try {
       const res = await fetch(endpoint);
+      if (!res.ok) throw new Error("Ошибка загрузки");
       const data = await res.json();
       setItems(data.data || []);
-    } catch (_) {
+    } catch (err) {
       setItems([]);
+      setMessage({ type: "error", text: err.message });
     }
     setShowEditor(false);
     setEditing(null);
@@ -424,25 +427,41 @@ function CmsPanel({ type }) {
   }, [type]);
 
   async function handleDelete(folder_name) {
-    await fetch(endpoint, {
+    if (!confirm("Удалить публикацию?")) return;
+    setMessage(null);
+    const res = await fetch(endpoint, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ folder_name }),
     });
-    fetchAll();
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      setMessage({ type: "error", text: err.error || "Ошибка удаления" });
+      return;
+    }
+    await fetchAll();
+    setMessage({ type: "ok", text: "Публикация удалена." });
   }
 
   async function handleSave(obj) {
     const method = editing ? "PUT" : "POST";
-    await fetch(endpoint, {
+    setMessage(null);
+    const res = await fetch(endpoint, {
       method,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(obj),
     });
-    fetchAll();
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || "Ошибка сохранения");
+    }
+    await fetchAll();
+    setMessage({ type: "ok", text: "Публикация сохранена." });
   }
 
   return (
@@ -467,6 +486,11 @@ function CmsPanel({ type }) {
 
       {!showEditor && <ImageSpecCard spec={coverSpec} />}
       <div className="mt-4" />
+      {message && (
+        <div className={`mb-4 font-kalam text-sm ${message.type === "ok" ? "text-green-700" : "text-red-700"}`}>
+          {message.text}
+        </div>
+      )}
 
       {!showEditor ? (
         <AdminList
@@ -476,10 +500,6 @@ function CmsPanel({ type }) {
             setShowEditor(true);
           }}
           onDelete={handleDelete}
-          onCreate={() => {
-            setEditing(null);
-            setShowEditor(true);
-          }}
           type={type}
         />
       ) : (

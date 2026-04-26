@@ -7,3 +7,28 @@
     @apply outline-none focus:outline-none;
   }
 }
+
+.cms-image-token {
+  display: inline-block;
+  margin: 0 0.25rem;
+  padding: 0.125rem 0.4rem;
+  border: 1px solid #a8d5ba;
+  border-radius: 0.5rem;
+  background: #f4fbf6;
+  color: #2a2a2a;
+}
+
+.cms-content {
+  white-space: pre-wrap;
+}
+
+.cms-content img,
+.cms-content .cms-inline-image {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 1rem;
+  object-fit: contain;
+}

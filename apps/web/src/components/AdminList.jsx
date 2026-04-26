@@ -1,11 +1,10 @@
 
 
-export default function AdminList({ items, onEdit, onDelete, onCreate, type }) {
+export default function AdminList({ items, onEdit, onDelete, type }) {
   return (
     <div className="max-w-3xl mx-auto mb-10">
-      <div className="flex justify-between items-center mb-6">
+      <div className="mb-6">
         <h2 className="text-2xl font-bold">{type === 'news' ? 'Новости' : 'Портфолио'}</h2>
-        <button onClick={onCreate} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Добавить</button>
       </div>
       {!items || items.length === 0 ? (
         <div className="text-gray-500 text-center py-10">Публикаций пока нет</div>
