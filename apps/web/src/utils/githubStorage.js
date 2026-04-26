@@ -216,15 +216,23 @@ export async function uploadAsset({ fileName, buffer }) {
     message: `cms: upload ${safe}`,
     isBinary: true,
   });
-  return { url: `/api/asset?kind=uploads&name=${encodeURIComponent(safe)}`, path };
+  return { url: rawUrl(path), path };
 }
 
 // Slideshow images live under public/slideshow — listed / added / deleted as
 // raw files so a fresh clone still contains the defaults committed to git.
 const SLIDESHOW_DIR = "apps/web/public/slideshow";
 
+function rawUrl(path) {
+  const { owner, repo, branch } = env();
+  return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/")}`;
+}
+
 function slideshowUrl(name) {
-  return `/api/asset?kind=slideshow&name=${encodeURIComponent(name)}`;
+  return rawUrl(`${SLIDESHOW_DIR}/${name}`);
 }
 
 export async function listSlideshow() {
