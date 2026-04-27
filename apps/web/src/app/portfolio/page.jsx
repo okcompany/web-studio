@@ -317,31 +317,31 @@ export default function PortfolioPage() {
       {/* Модальное окно проекта */}
       {isModalOpen && selectedProject && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-[#2A2A2A]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={closeProjectModal}
         >
           <div
-            className="bg-[#FEFEFE] max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+            className="bg-[#FEFEFE] max-w-4xl w-full max-h-[90vh] overflow-y-auto relative rounded-3xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative p-8 lg:p-12">
+            <div className="relative p-6 lg:p-12">
               {/* Цветная рисованная граница модального окна */}
               <svg
-                className="absolute inset-0 w-full h-full pointer-events-none"
+                className="absolute inset-4 w-[calc(100%-2rem)] h-[calc(100%-2rem)] pointer-events-none"
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
               >
-              <rect
-                x="5"
-                y="0"
-                width="90"
-                height="100"
-                stroke="url(#modalGradient)"
-                strokeWidth="2"
-                fill="none"
-                rx="1"
-                transform="rotate(-0.5 50 50)"
-              />
+                <rect
+                  x="4"
+                  y="4"
+                  width="92"
+                  height="92"
+                  stroke="url(#modalGradient)"
+                  strokeWidth="1.5"
+                  fill="none"
+                  rx="4"
+                  transform="rotate(-0.4 50 50)"
+                />
                 <defs>
                   <linearGradient
                     id="modalGradient"
@@ -356,18 +356,10 @@ export default function PortfolioPage() {
                   </linearGradient>
                 </defs>
               </svg>
-              {/* Кнопка закрытия сверху */}
               <button
                 onClick={closeProjectModal}
-                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center font-caveat text-2xl text-[#A8D5BA] hover:text-[#2A2A2A] transition-colors duration-300 z-10"
-              >
-                <X size={24} />
-              </button>
-
-              {/* Кнопка закрытия снизу */}
-              <button
-                onClick={closeProjectModal}
-                className="absolute bottom-4 right-4 w-10 h-10 flex items-center justify-center font-caveat text-2xl text-[#A8D5BA] hover:text-[#2A2A2A] transition-colors duration-300 z-10"
+                className="sticky top-4 ml-auto w-11 h-11 flex items-center justify-center rounded-full bg-white/90 text-[#A8D5BA] hover:text-[#2A2A2A] shadow-md transition-colors duration-300 z-20"
+                aria-label="Close project"
               >
                 <X size={24} />
               </button>
@@ -437,7 +429,7 @@ export default function PortfolioPage() {
                 {/* Описание проекта */}
                 <div className="max-w-3xl mx-auto">
                   <h3 className="font-caveat text-3xl font-semibold text-[#2A2A2A] mb-6 text-center">
-                    Project Details
+                    {t('portfolio.projectDescription')}
                   </h3>
 
                   <div

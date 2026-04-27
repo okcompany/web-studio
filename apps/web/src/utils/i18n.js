@@ -200,6 +200,8 @@ export const translations = {
       title: "Neuigkeiten & Updates",
       description: "Aktuelle Nachrichten, Events und neue Projekte aus meiner Arbeit in Webentwicklung, Design und dem Einsatz von Künstlicher Intelligenz.",
       empty: "Bald erscheint hier Neues. Schauen Sie später wieder vorbei!",
+      readMore: "Mehr lesen",
+      storyDetails: "Nachricht",
     },
     about: {
       title: "Über mich",
@@ -549,6 +551,8 @@ export const translations = {
       title: "Новости и обновления",
       description: "Здесь публикуются свежие новости, события и новые проекты из мира веб-разработки, дизайна и искусственного интеллекта.",
       empty: "Скоро здесь появятся новости. Загляните позже!",
+      readMore: "Читать полностью",
+      storyDetails: "Новость",
     },
 
     portfolio: {
@@ -852,6 +856,8 @@ export const translations = {
       title: "News & Updates",
       description: "The latest news, events and new projects from my web development, design and AI work.",
       empty: "New stories will appear here soon. Check back later!",
+      readMore: "Read more",
+      storyDetails: "News story",
     },
 
     portfolio: {
