@@ -27,6 +27,36 @@ function imageHtml(url, name) {
   return `<img src="${escapeAttribute(url)}" alt="${escapeAttribute(safeName)}" class="cms-inline-image" loading="lazy" />`;
 }
 
+export function getFirstCmsImage(value) {
+  const html = String(value || "");
+  const tokenMatch =
+    /<span\b([^>]*)data-cms-image=(["'])(.*?)\2([^>]*)>(.*?)<\/span>/is.exec(
+      html,
+    );
+  if (tokenMatch && isImageUrl(tokenMatch[3])) {
+    const attrs = `${tokenMatch[1]} ${tokenMatch[4]}`;
+    return {
+      url: tokenMatch[3],
+      name: attrValue(attrs, "data-cms-filename") || stripTags(tokenMatch[5]),
+    };
+  }
+
+  const markdownMatch = /!\[([^\]]*)]\(([^)]+)\)/.exec(html);
+  if (markdownMatch && isImageUrl(markdownMatch[2])) {
+    return { url: markdownMatch[2], name: markdownMatch[1] };
+  }
+
+  const imgMatch = /<img\b([^>]*)>/i.exec(html);
+  if (imgMatch) {
+    const url = attrValue(imgMatch[1], "src");
+    if (isImageUrl(url)) {
+      return { url, name: attrValue(imgMatch[1], "alt") };
+    }
+  }
+
+  return null;
+}
+
 export function countCmsImages(value) {
   const html = String(value || "");
   const tokenCount = (html.match(/data-cms-image=/gi) || []).length;
